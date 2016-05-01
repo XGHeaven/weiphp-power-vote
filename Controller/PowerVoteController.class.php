@@ -124,7 +124,7 @@ class PowerVoteController extends AddonsController {
 				$this->error ( '非法访问！' );
 			}
 			
-			$option_list = M ( 'vote_option' )->where ( 'vote_id=' . $id )->order ( '`order` asc' )->select ();
+			$option_list = M ( 'power_vote_option' )->where ( 'vote_id=' . $id )->order ( '`order` asc' )->select ();
 			$this->assign ( 'option_list', $option_list );
 			
 			$this->assign ( 'fields', $fields );
