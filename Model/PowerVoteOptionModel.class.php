@@ -1,13 +1,13 @@
 <?php
 
-namespace Addons\Vote\Model;
+namespace Addons\PowerVote\Model;
 
 use Think\Model;
 
 /**
  * Vote模型
  */
-class VoteOptionModel extends Model {
+class PowerVoteOptionModel extends Model {
 	function set($vote_id, $post) {
 		$opt_data ['vote_id'] = $vote_id;
 		foreach ( $post ['name'] as $key => $opt ) {

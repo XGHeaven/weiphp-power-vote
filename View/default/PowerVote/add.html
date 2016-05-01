@@ -12,9 +12,7 @@
         <form id="form" action="{$post_url}" method="post" class="form-horizontal form-center">
           <!-- 基础文档模型 -->
           <volist name=":parse_config_attr($model['field_group'])" id="group">
-            <div id="tab{$key}" class="tab-pane <eq name="key" value="1">in
-              </eq>
-              tab{$key}">
+            <div id="tab{$key}" class="tab-pane <eq name="key" value="1">in</eq> tab{$key}">
               <volist name="fields[$key]" id="field">
                 <if condition="$field['is_show'] == 4">
                   <input type="hidden" class="text input-large" name="{$field.name}" value="{:I($field[name], $field[value])}">
@@ -30,7 +28,7 @@
                     <div class="controls">
                       <switch name="field.type">
                         <case value="num">
-                          <input type="number" class="text input-medium" name="{$field.name}" value="{:I($field[name], $field[value])}">
+                          <input type="number" class="input-medium" name="{$field.name}" value="{:I($field[name], $field[value])}">
                         </case>
                         <case value="string">
                           <input type="text" class="text input-large" name="{$field.name}" value="{:I($field[name], $field[value])}">
@@ -41,10 +39,10 @@
                           </label>
                         </case>
                         <case value="datetime">
-                          <input type="datetime" name="{$field.name}" class="text input-large time" value="{:I($field[name], $field[value])}" placeholder="请选择时间" />
+                          <input type="datetime" name="{$field.name}" class="input-large time" value="{:I($field[name], $field[value])}" placeholder="请选择时间" />
                         </case>
                         <case value="date">
-                          <input type="datetime" name="{$field.name}" class="text input-large date" value="{:I($field[name], $field[value])}" placeholder="请选择日期" />
+                          <input type="datetime" name="{$field.name}" class="input-large date" value="{:I($field[name], $field[value])}" placeholder="请选择日期" />
                         </case>                        
                         <case value="bool">
                           <select name="{$field.name}">

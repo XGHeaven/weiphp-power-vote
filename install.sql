@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `wp_vote` (
+CREATE TABLE IF NOT EXISTS `wp_power_vote` (
 `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
 `mTime`  int(10) NOT NULL  COMMENT '更新时间',
 `token`  varchar(255) NOT NULL  COMMENT 'Token',
@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS `wp_vote` (
 `is_fans`  char(50) NOT NULL  DEFAULT 1 COMMENT '是否需要关注',
 PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci CHECKSUM=0 ROW_FORMAT=DYNAMIC DELAY_KEY_WRITE=0;
-INSERT INTO `wp_vote` (`id`,`keyword`,`title`,`description`,`picurl`,`type`,`start_date`,`end_date`,`is_img`,`vote_count`,`cTime`,`mTime`,`token`,`content`,`is_fans`,`qrcode`) VALUES ('33','投票','最美照片','呃绕弯儿','365','1','1439349000','1440126600','1','1','1439449257','2147483647','gh_8146957b348c','<p><img src="/Uploads/Editor/gh_8146957b348c/2015-08-12/55cac0519c7fb.jpg" style="float:none;" title="00023f006d1b1009ba7303.jpg"/></p><p><img src="/Uploads/Editor/gh_8146957b348c/2015-08-12/55cac055591ef.jpg" style="float:none;" title="00023f006d1b1009bec914.jpg"/></p><p><br/></p>','1','373');
-INSERT INTO `wp_model` (`name`,`title`,`extend`,`relation`,`need_pk`,`field_sort`,`field_group`,`attribute_list`,`template_list`,`template_add`,`template_edit`,`list_grid`,`list_row`,`search_key`,`search_list`,`create_time`,`update_time`,`status`,`engine_type`) VALUES ('vote','投票','0','','1','{"1":["keyword","title","description","picurl","type","start_date","end_date"]}','1:基础','','','','','id:投票ID\r\nkeyword:关键词\r\ntitle:投票标题\r\ntype|get_name_by_status:类型\r\nis_img|get_name_by_status:状态\r\nvote_count:投票数\r\nids:操作:show&id=[id]|预览,[EDIT]&id=[id]|编辑,[DELETE]|删除','20','title','description','1388930292','1401017026','1','MyISAM');
+INSERT INTO `wp_power_vote` (`id`,`keyword`,`title`,`description`,`picurl`,`type`,`start_date`,`end_date`,`is_img`,`vote_count`,`cTime`,`mTime`,`token`,`content`,`is_fans`,`qrcode`) VALUES ('33','投票','最美照片','呃绕弯儿','365','1','1439349000','1440126600','1','1','1439449257','2147483647','gh_8146957b348c','<p><img src="/Uploads/Editor/gh_8146957b348c/2015-08-12/55cac0519c7fb.jpg" style="float:none;" title="00023f006d1b1009ba7303.jpg"/></p><p><img src="/Uploads/Editor/gh_8146957b348c/2015-08-12/55cac055591ef.jpg" style="float:none;" title="00023f006d1b1009bec914.jpg"/></p><p><br/></p>','1','373');
+INSERT INTO `wp_model` (`name`,`title`,`extend`,`relation`,`need_pk`,`field_sort`,`field_group`,`attribute_list`,`template_list`,`template_add`,`template_edit`,`list_grid`,`list_row`,`search_key`,`search_list`,`create_time`,`update_time`,`status`,`engine_type`) VALUES ('power_vote','Power投票','0','','1','{"1":["keyword","title","description","picurl","type","start_date","end_date"]}','1:基础','','','','','id:投票ID\r\nkeyword:关键词\r\ntitle:投票标题\r\ntype|get_name_by_status:类型\r\nis_img|get_name_by_status:状态\r\nvote_count:投票数\r\nids:操作:show&id=[id]|预览,[EDIT]&id=[id]|编辑,[DELETE]|删除','20','title','description','1388930292','1401017026','1','MyISAM');
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('mTime','更新时间','int(10) NOT NULL','datetime','','','0','','0','0','1','1390634006','1390634006','','3','','regex','','3','function');
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('token','Token','varchar(255) NOT NULL','string','','','0','','0','0','1','1391397388','1391397388','','3','','regex','','3','function');
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('content','描述','text NOT NULL','editor','','','1','','0','0','1','1439350815','1439350815','','3','','regex','','3','function');
@@ -36,7 +36,7 @@ INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_s
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('is_fans','是否需要关注','char(50) NOT NULL','select','1','','1','1:是\r\n0:否','0','0','1','1439351098','1439350993','','3','','regex','','3','function');
 UPDATE `wp_attribute` SET model_id= (SELECT MAX(id) FROM `wp_model`) WHERE model_id=0;
 
-CREATE TABLE IF NOT EXISTS `wp_vote_option` (
+CREATE TABLE IF NOT EXISTS `wp_power_vote_option` (
 `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
 `vote_id`  int(10) unsigned NOT NULL   COMMENT '投票ID',
 `name`  varchar(255) NOT NULL  COMMENT '选项标题',
@@ -45,10 +45,10 @@ CREATE TABLE IF NOT EXISTS `wp_vote_option` (
 `order`  int(10) unsigned NOT NULL   DEFAULT 0 COMMENT '选项排序',
 PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci CHECKSUM=0 ROW_FORMAT=DYNAMIC DELAY_KEY_WRITE=0;
-INSERT INTO `wp_vote_option` (`id`,`vote_id`,`name`,`image`,`opt_count`,`order`) VALUES ('63','33','erwt','366','0','1');
-INSERT INTO `wp_vote_option` (`id`,`vote_id`,`name`,`image`,`opt_count`,`order`) VALUES ('64','33','345','367','0','2');
-INSERT INTO `wp_vote_option` (`id`,`vote_id`,`name`,`image`,`opt_count`,`order`) VALUES ('65','33','345345','366','0','3');
-INSERT INTO `wp_model` (`name`,`title`,`extend`,`relation`,`need_pk`,`field_sort`,`field_group`,`attribute_list`,`template_list`,`template_add`,`template_edit`,`list_grid`,`list_row`,`search_key`,`search_list`,`create_time`,`update_time`,`status`,`engine_type`) VALUES ('vote_option','投票选项','0','','1','','1:基础','','','','','','10','','','1388933346','1388933346','1','MyISAM');
+INSERT INTO `wp_power_vote_option` (`id`,`vote_id`,`name`,`image`,`opt_count`,`order`) VALUES ('63','33','erwt','366','0','1');
+INSERT INTO `wp_power_vote_option` (`id`,`vote_id`,`name`,`image`,`opt_count`,`order`) VALUES ('64','33','345','367','0','2');
+INSERT INTO `wp_power_vote_option` (`id`,`vote_id`,`name`,`image`,`opt_count`,`order`) VALUES ('65','33','345345','366','0','3');
+INSERT INTO `wp_model` (`name`,`title`,`extend`,`relation`,`need_pk`,`field_sort`,`field_group`,`attribute_list`,`template_list`,`template_add`,`template_edit`,`list_grid`,`list_row`,`search_key`,`search_list`,`create_time`,`update_time`,`status`,`engine_type`) VALUES ('power_vote_option','Power投票选项','0','','1','','1:基础','','','','','','10','','','1388933346','1388933346','1','MyISAM');
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('vote_id','投票ID','int(10) unsigned NOT NULL ','num','','','4','','0','1','1','1388982678','1388933478','','3','','regex','$_REQUEST['vote_id']','3','string');
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('name','选项标题','varchar(255) NOT NULL','string','','','1','','0','1','1','1388933552','1388933552','','3','','regex','','3','function');
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('image','图片选项','int(10) unsigned NOT NULL ','picture','','','5','','0','0','1','1388984467','1388933679','','3','','regex','','3','function');
@@ -56,7 +56,7 @@ INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_s
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('order','选项排序','int(10) unsigned NOT NULL ','num','0','','1','','0','0','1','1388933951','1388933951','','3','','regex','','3','function');
 UPDATE `wp_attribute` SET model_id= (SELECT MAX(id) FROM `wp_model`) WHERE model_id=0;
 
-CREATE TABLE IF NOT EXISTS `wp_vote_log` (
+CREATE TABLE IF NOT EXISTS `wp_power_vote_log` (
 `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
 `vote_id`  int(10) unsigned NOT NULL   COMMENT '投票ID',
 `user_id`  int(10) NOT NULL   COMMENT '用户ID',
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `wp_vote_log` (
 `cTime`  int(10) NOT NULL  COMMENT '创建时间',
 PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci CHECKSUM=0 ROW_FORMAT=DYNAMIC DELAY_KEY_WRITE=0;
-INSERT INTO `wp_model` (`name`,`title`,`extend`,`relation`,`need_pk`,`field_sort`,`field_group`,`attribute_list`,`template_list`,`template_add`,`template_edit`,`list_grid`,`list_row`,`search_key`,`search_list`,`create_time`,`update_time`,`status`,`engine_type`) VALUES ('vote_log','投票记录','0','','1','','1:基础','','','','','','10','','','1388934136','1388934136','1','MyISAM');
+INSERT INTO `wp_model` (`name`,`title`,`extend`,`relation`,`need_pk`,`field_sort`,`field_group`,`attribute_list`,`template_list`,`template_add`,`template_edit`,`list_grid`,`list_row`,`search_key`,`search_list`,`create_time`,`update_time`,`status`,`engine_type`) VALUES ('power_vote_log','Power投票记录','0','','1','','1:基础','','','','','','10','','','1388934136','1388934136','1','MyISAM');
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('vote_id','投票ID','int(10) unsigned NOT NULL ','num','','','0','','0','1','1','1388934189','1388934189','','3','','regex','','3','function');
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('user_id','用户ID','int(10) NOT NULL ','num','','','0','','0','0','1','1388934265','1388934265','','3','','regex','','3','function');
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('token','用户TOKEN','varchar(255) NOT NULL','string','','','0','','0','0','1','1388934296','1388934296','','3','','regex','','3','function');

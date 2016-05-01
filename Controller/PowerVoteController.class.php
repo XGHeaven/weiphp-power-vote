@@ -1,20 +1,21 @@
 <?php
 
-namespace Addons\Vote\Controller;
+namespace Addons\PowerVote\Controller;
 
 use Home\Controller\AddonsController;
 
-class VoteController extends AddonsController {
+class PowerVoteController extends AddonsController {
 	protected $model;
 	protected $option;
 	public function __construct() {
 		parent::__construct ();
-		$this->model = M ( 'Model' )->getByName ( $_REQUEST ['_controller'] );
+		$this->model = M ( 'Model' )->getByName ( 'power_vote' );
+//		$this->model = M ( 'Model' )->getByName ( 'V' );
 		$this->model || $this->error ( '模型不存在！' );
 		
 		$this->assign ( 'model', $this->model );
 		
-		$this->option = M ( 'Model' )->getByName ( 'vote_option' );
+		$this->option = M ( 'Model' )->getByName ( 'power_vote_option' );
 		$this->assign ( 'option', $this->option );
 	}
 	/**
@@ -65,7 +66,7 @@ class VoteController extends AddonsController {
 		$this->assign ( 'list_grids', $grids );
 		$this->assign ( 'list_data', $data );
 		$this->meta_title = $this->model ['title'] . '列表';
-		$this->display ( T ( 'Addons://Vote@Vote/lists' ) );
+		$this->display ( T ( 'Addons://PowerVote@PowerVote/lists' ) );
 	}
 	public function del() {
 		$ids = I ( 'id', 0 );
@@ -102,10 +103,10 @@ class VoteController extends AddonsController {
 			$Model = $this->checkAttr ( $Model, $this->model ['id'] );
 			if ($Model->create () && $Model->save ()) {
 				// 增加选项
-				D ( 'Addons://Vote/VoteOption' )->set ( I ( 'post.id' ), I ( 'post.' ) );
+				D ( 'Addons://PowerVote/PowerVoteOption' )->set ( I ( 'post.id' ), I ( 'post.' ) );
 				
 				// 保存关键词
-				D ( 'Common/Keyword' )->set ( I ( 'post.keyword' ), 'Vote', I ( 'post.id' ) );
+				D ( 'Common/Keyword' )->set ( I ( 'post.keyword' ), 'PowerVote', I ( 'post.id' ) );
 				
 				$this->success ( '保存' . $this->model ['title'] . '成功！', U ( 'lists?model=' . $this->model ['name'] ) );
 			} else {
@@ -129,7 +130,7 @@ class VoteController extends AddonsController {
 			$this->assign ( 'fields', $fields );
 			$this->assign ( 'data', $data );
 			$this->meta_title = '编辑' . $this->model ['title'];
-			$this->display ( T ( 'Addons://Vote@Vote/edit' ) );
+			$this->display ( T ( 'Addons://PowerVote@PowerVote/edit' ) );
 		}
 	}
 	public function add() {
@@ -141,10 +142,10 @@ class VoteController extends AddonsController {
 			$Model = $this->checkAttr ( $Model, $this->model ['id'] );
 			if ($Model->create () && $vote_id = $Model->add ()) {
 				// 增加选项
-				D ( 'Addons://Vote/VoteOption' )->set ( $vote_id, I ( 'post.' ) );
+				D ( 'Addons://PowerVote/PowerVoteOption' )->set ( $vote_id, I ( 'post.' ) );
 				
 				// 保存关键词
-				D ( 'Common/Keyword' )->set ( I ( 'keyword' ), 'Vote', $vote_id );
+				D ( 'Common/Keyword' )->set ( I ( 'keyword' ), 'PowerVote', $vote_id );
 				
 				$this->success ( '添加' . $this->model ['title'] . '成功！', U ( 'lists?model=' . $this->model ['name'] ) );
 			} else {
@@ -159,7 +160,7 @@ class VoteController extends AddonsController {
 			$this->assign ( 'option_fields', $option_fields );
 			
 			$this->meta_title = '新增' . $this->model ['title'];
-			$this->display ( $this->model ['template_add'] ? $this->model ['template_add'] : T ( 'Addons://Vote@Vote/add' ) );
+			$this->display ( $this->model ['template_add'] ? $this->model ['template_add'] : T ( 'Addons://PowerVote@PowerVote/add' ) );
 		}
 	}
 	protected function checkAttr($Model, $model_id) {
@@ -230,7 +231,7 @@ class VoteController extends AddonsController {
 		$this->assign ( 'event_url', event_url ( '投票', $vote_id ) );
 		$this->assign('mid', $this->mid);
 
-		$this->display ( T ( 'Addons://Vote@Vote/newshow' ) );
+		$this->display ( T ( 'Addons://PowerVote@PowerVote/newshow' ) );
 	}
 
 	function result() {
@@ -245,7 +246,7 @@ class VoteController extends AddonsController {
 		$this->assign ( 'event_url', event_url ( '投票', $vote_id ) );
 		$this->assign('mid', $this->mid);
 
-		$this->display ( T ( 'Addons://Vote@Vote/result' ) );
+		$this->display ( T ( 'Addons://PowerVote@PowerVote/result' ) );
 	}
 	function _getVoteInfo($id) {
 		// 检查ID是否合法
@@ -254,12 +255,12 @@ class VoteController extends AddonsController {
 		}
 		
 		$map ['id'] = $map2 ['vote_id'] = intval ( $id );
-		$info = M ( 'vote' )->where ( $map )->find ();
+		$info = M ( 'power_vote' )->where ( $map )->find ();
 		// dump(M ( 'vote' )->getLastSql());
 		$this->assign ( 'info', $info );
 		
 		// dump($info);
-		$opts = M ( 'vote_option' )->where ( $map2 )->order ( '`order` asc' )->select ();
+		$opts = M ( 'power_vote_option' )->where ( $map2 )->order ( '`order` asc' )->select ();
 		foreach ( $opts as $p ) {
 			$total += $p ['opt_count'];
 		}
@@ -305,11 +306,11 @@ class VoteController extends AddonsController {
 		$data ["token"] = $token;
 		$data ["options"] = implode ( ',', $opts_ids );
 		$data ["cTime"] = time ();
-		$addid = M ( "vote_log" )->add ( $data );
+		$addid = M ( "power_vote_log" )->add ( $data );
 		// 投票选项信息的num+1
 		foreach ( $opts_ids as $v ) {
 			$v = intval ( $v );
-			$res = M ( "vote_option" )->where ( 'id=' . $v )->setInc ( "opt_count" );
+			$res = M ( "power_vote_option" )->where ( 'id=' . $v )->setInc ( "opt_count" );
 		}
 		
 		// 投票信息的vote_count+1
@@ -319,7 +320,7 @@ class VoteController extends AddonsController {
 		add_credit ( 'vote' );
 		
 		// 连续投票
-		$next_id = M ( "vote" )->where ( 'id=' . $vote_id )->getField ( "next_id" );
+		$next_id = M ( "power_vote" )->where ( 'id=' . $vote_id )->getField ( "next_id" );
 		if (! empty ( $next_id )) {
 			$vote_id = $next_id;
 		}
@@ -341,7 +342,7 @@ class VoteController extends AddonsController {
 	private function _is_join($vote_id, $user_id, $token) {
 		// $vote_limit = M ( 'vote' )->where ( 'id=' . $vote_id )->getField ( 'vote_limit' );
 		$vote_limit = 1;
-		$list = M ( "vote_log" )->where ( "vote_id=$vote_id AND user_id='$user_id' AND token='$token' AND options <>''" )->select ();
+		$list = M ( "power_vote_log" )->where ( "vote_id=$vote_id AND user_id='$user_id' AND token='$token' AND options <>''" )->select ();
 		$count = count ( $list );
 		$info = array_pop ( $list );
 		if ($info) {
