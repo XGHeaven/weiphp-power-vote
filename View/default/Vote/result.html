@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width,inital-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="">
+    <title>{$info.title}</title>
+    <link href="__STATIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="{:ADDON_PUBLIC_PATH}/vote.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="__STATIC__/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript">
+        var cknums = {$info.cknums|intval};
+        var type = "{$info.type|intval}";
+        function checkForm(){
+            return true;
+
+            if(type=='0') return true;
+
+            var content = '';
+            var msg = 0;
+            $("input[type='checkbox']:checked").each(function(){ msg += 1; });
+            //console.log(msg);
+            //return false;
+            if(msg>cknums){
+                $('#errorInfo').html('该投票最多可同时选择'+cknums+'项').show();
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+<div class="img-header">
+    <php>if(!empty($info['picurl'])) { </php>
+    <img width="100%" src="{$info.picurl|get_cover_url}">
+    <h4>{$info.title}</h4>
+    <php> }else{ </php>
+    <h4 style="position:static">{$info.title}</h4>
+    <php>}</php>
+</div>
+<div class="vote-container">
+    <div class="header">活动说明</div>
+    <div class="content">{$info.content|htmlspecialchars_decode}</div>
+</div>
+<div class="vote-container">
+    <div class="header">投票规则</div>
+    <div class="content">
+        <ol>
+            <li> 起止时间: {$info.start_date|time_format} 至 {$info.end_date|time_format} </li>
+            <php>$type = $info['type'] == 0 ? 'radio' : 'checkbox';</php>
+            <li> 本次投票为 "{$info['type'] == 0 ? '单选投票' : '多选投票'}" </li>
+            <if condition="($info.is_fans eq 1) and ($mid lt 0)">
+                <!-- TODO: 显示那个一个微信公众帐号 -->
+                <li>本次投票请在关注微信后使用</li>
+            </if>
+        </ol>
+    </div>
+    <div class="remark">
+        <php>if($canJoin) {</php>
+        <php>if($info['result_display']==0) {</php>
+        <span class="gray">已经有{$info.vote_count|intval}人投票，赶紧投下你宝贵的一票吧 :)</span>
+        <php>}</php>
+
+        <php>}else{</php>
+        <span class="gray">投票已过期或你已经投过票 :)</span>
+        <php>}</php>
+    </div>
+</div>
+<div class="vote-container">
+    <div class="header">
+        投票结果
+    </div>
+    <ul class="vote-result">
+        <foreach name="opts" item="opt" key="k">
+            <li>
+                <div class="title clearfix">
+                    {$opt.name}
+                    <div class="pull-right">
+                        {$opt.opt_count}
+                        票
+                    </div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: {$opt.percent}%">
+                        <span>{$opt.percent}%</span>
+                    </div>
+                </div>
+            </li>
+        </foreach>
+    </ul>
+    <a href="{:U('show', Array('id' => $vote_id))}" class="btn btn-primary form-control">返回</a>
+</div>
+<script>
+    function init_close(){
+        $('#close_page').show();
+        $('#close_page_btn').click(function(){
+            WeixinJSBridge.invoke('closeWindow',{},function(res){;});
+        });
+    }
+    $(function(){
+        $(".list").click(function () {
+            if ($(this).hasClass("bgBlue")) {
+                $(this).removeClass("bgBlue").find("input").attr("checked", true);
+            } else {
+                $(this).addClass("bgBlue").find("input").attr("checked", false);
+            }
+        });
+
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', init_close, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', init_close);
+                document.attachEvent('onWeixinJSBridgeReady', init_close);
+            }
+        }else{
+            init_close();
+        }
+    });
+</script>
+</body>
+</html>

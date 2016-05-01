@@ -1,0 +1,136 @@
+@charset "utf-8";
+body {
+  background: #eee;
+}
+.text-primary {
+  color: #053284;
+}
+/* CSS Document */
+/*微信投票*/
+.vote_wrap {
+  width: 100%;
+}
+article {
+  background: #fff;
+  border-bottom: 2px solid #33ab07;
+}
+.img-header {
+  position: relative;
+  min-height: 1em;
+}
+.img-header h4 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(3,25,66,0.5);
+  color: #fff;
+  word-break: break-all;
+  margin: 0;
+}
+.time {
+  margin: 0 10px 10px;
+  color: #33ab07;
+}
+article .info {
+  margin: 0 15px 15px;
+  color: #f00;
+  font-size: 21px;
+  font-weight: bolder;
+}
+.choice_list {
+  padding: 10px;
+}
+.databar {
+  height: 10px;
+  margin: 5px 12px 0 0;
+  border-radius: 4px;
+  background: #fff;
+  border: 1px solid #33ab07;
+}
+.actual_data {
+  height: 10px;
+  border-radius: 3px;
+  background: #33ab07;
+}
+.vote_type {
+  margin: 10px 10px 0;
+  color: #fff;
+  line-height: 1.5em;
+}
+.choice_list li {
+  margin: 10px 0;
+  background: #fafafa;
+  padding: 10px;
+  border-radius: 5px;
+}
+.choice_list li img {
+  max-width: 100%;
+}
+.choice_list .databar {
+  -webkit-box-flex: 9;
+}
+.choice_list .count {
+  -webkit-box-flex: 1;
+}
+.vote-container {
+  padding: 10px;
+  background: #fff;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px -2px #999;
+}
+.vote-container .header {
+  color: #053284;
+}
+.container-fullwidth {
+  width: 100%;
+}
+ul.vote-list {
+  list-style: none;
+  width: 100%;
+  padding: 0;
+}
+ul.vote-list.image li.item {
+  float: left;
+  width: 50%;
+}
+ul.vote-list.text li.item,
+ul.vote-list.image li.item {
+  padding: 10px;
+}
+ul.vote-list.text li.item .item-wrapper,
+ul.vote-list.image li.item .item-wrapper {
+  display: inline-block;
+  box-shadow: 0 0 2px #999;
+  width: 100%;
+}
+ul.vote-list.text li.item .item-wrapper .img-wrapper,
+ul.vote-list.image li.item .item-wrapper .img-wrapper {
+  min-height: 150px;
+}
+ul.vote-list.text li.item .item-wrapper .img-wrapper img,
+ul.vote-list.image li.item .item-wrapper .img-wrapper img {
+  width: 100%;
+  margin: auto;
+}
+ul.vote-list.text li.item .item-wrapper .title,
+ul.vote-list.image li.item .item-wrapper .title {
+  line-height: 2;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+ul.vote-list.text li.item .item-wrapper .status,
+ul.vote-list.image li.item .item-wrapper .status {
+  margin-bottom: 5px;
+}
+ul.vote-list.text li.item .item-wrapper .select,
+ul.vote-list.image li.item .item-wrapper .select {
+  display: block;
+  border-radius: 0;
+}
+.vote-result {
+  padding: 0;
+  list-style: none;
+}

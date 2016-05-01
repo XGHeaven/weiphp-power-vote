@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width,inital-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="">
+    <title>{$info.title}</title>
+    <link href="__STATIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="{:ADDON_PUBLIC_PATH}/vote.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="__STATIC__/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript">
+        var cknums = {$info.cknums|intval};
+        var type = "{$info.type|intval}";
+        function checkForm(){
+            return true;
+
+            if(type=='0') return true;
+
+            var content = '';
+            var msg = 0;
+            $("input[type='checkbox']:checked").each(function(){ msg += 1; });
+            //console.log(msg);
+            //return false;
+            if(msg>cknums){
+                $('#errorInfo').html('该投票最多可同时选择'+cknums+'项').show();
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</head>
+<body>
+<div class="img-header">
+    <php>if(!empty($info['picurl'])) { </php>
+    <img width="100%" src="{$info.picurl|get_cover_url}">
+    <h4>{$info.title}</h4>
+    <php> }else{ </php>
+    <h4 style="position:static">{$info.title}</h4>
+    <php>}</php>
+</div>
+<div class="vote-container">
+    <div class="header">活动说明</div>
+    <div class="content">{$info.content|htmlspecialchars_decode}</div>
+</div>
+<div class="vote-container">
+    <div class="header">投票规则</div>
+    <div class="content">
+        <ol>
+            <li> 起止时间: {$info.start_date|time_format} 至 {$info.end_date|time_format} </li>
+            <php>$type = $info['type'] == 0 ? 'radio' : 'checkbox';</php>
+            <li> 本次投票为 "{$info['type'] == 0 ? '单选投票' : '多选投票'}" </li>
+            <if condition="($info.is_fans eq 1) and ($mid lt 0)">
+                <!-- TODO: 显示那个一个微信公众帐号 -->
+                <li>本次投票请在关注微信后使用</li>
+            </if>
+        </ol>
+    </div>
+    <div class="remark">
+        <php>if($canJoin) {</php>
+        <php>if($info['result_display']==0) {</php>
+        <span class="gray">已经有{$info.vote_count|intval}人投票，赶紧投下你宝贵的一票吧 :)</span>
+        <php>}</php>
+
+        <php>}else{</php>
+        <span class="gray">投票已过期或你已经投过票 :)</span>
+        <php>}</php>
+    </div>
+</div>
+<div class="vote-container">
+    <div class="header">
+        投票列表
+        <div class="addon pull-right">
+            <a href="{:U('result', Array('id' => $vote_id))}">查看投票结果 &gt;</a>
+        </div>
+    </div>
+    <php>$is_img = $info['is_img'] == 1;</php>
+    <form action="{:U( 'join' )}" onSubmit="return checkForm();" method="post">
+        <ul class="vote-list clearfix {$is_img?'image':'text'}">
+            <foreach name="opts" item="opt" key="k">
+                <li class="item">
+                    <div class="item-wrapper">
+                        <if condition="$is_img">
+                            <div class="img-wrapper">
+                                <img src="{$opt.image|get_cover_url}">
+                            </div>
+                        </if>
+                        <div class="title container">{$opt.name}</div>
+                        <div class="status container">
+                            <div class="number pull-left">编号: {$k+1}</div>
+                            <div class="ticket pull-right">票数: <span class="text-primary">{$opt.opt_count}</span></div>
+                        </div>
+                        <if condition="$canJoin">
+                            <label class="btn btn-primary select">
+                                <input type="{$type}" value="{$opt.id}" name="optArr[]">
+                                投他一票
+                            </label>
+                        </if>
+                    </div>
+                </li>
+            </foreach>
+        </ul>
+
+        <div class="warning" id="errorInfo"></div>
+        <input type="hidden" value="{:I('token')}" name="token" />
+        <input type="hidden" value="{:I('wecha_id')}" name="wecha_id" />
+        <input type="hidden" value="{$info.id}" name="vote_id" />
+        <php>if($canJoin) { </php>
+        <div class="tb"><input type="submit" class="btn btn-primary form-control" value="确认提交" /></div>
+        <php> }else if(!empty($info['next_id'])) { $next_url = U('Vote/show','id='.$info['next_id'].'&token='.I('token').'&wecha_id='.I('wecha_id'));</php>
+        <div class="tb"><input type="button" class="btn " onClick="window.location.href='{$next_url}'" value="继续投票" /></div>
+        <php> } </php>
+        <php>if(!$canJoin && !empty($event_url)) { </php>
+        <div class="tb"><a href="{$event_url}" class="btn m_10 flex_1" style="background-color:#f36637">参加抽奖活动</a></div>
+        <php> } </php>
+
+        <div class="tb" id="close_page" style="display:none"><input type="button" id="close_page_btn" class="btn m_10 flex_1" value="关闭返回" /></div>
+    </form>
+</div>
+<script>
+    function init_close(){
+        $('#close_page').show();
+        $('#close_page_btn').click(function(){
+            WeixinJSBridge.invoke('closeWindow',{},function(res){;});
+        });
+    }
+    $(function(){
+        $(".list").click(function () {
+            if ($(this).hasClass("bgBlue")) {
+                $(this).removeClass("bgBlue").find("input").attr("checked", true);
+            } else {
+                $(this).addClass("bgBlue").find("input").attr("checked", false);
+            }
+        });
+
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', init_close, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', init_close);
+                document.attachEvent('onWeixinJSBridgeReady', init_close);
+            }
+        }else{
+            init_close();
+        }
+    });
+</script>
+</body>
+</html>
