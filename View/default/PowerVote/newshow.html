@@ -34,14 +34,12 @@
     </script>
 </head>
 <body>
-<div class="img-header">
-    <php>if(!empty($info['picurl'])) { </php>
-    <img width="100%" src="{$info.picurl|get_cover_url}">
-    <h4>{$info.title}</h4>
-    <php> }else{ </php>
-    <h4 style="position:static">{$info.title}</h4>
-    <php>}</php>
-</div>
+<notempty name="info.picurl">
+    <div class="img-header">
+        <img width="100%" src="{$info.picurl|get_cover_url}">
+        <h4>{$info.title}</h4>
+    </div>
+</notempty>
 <div class="vote-container">
     <div class="header">活动说明</div>
     <div class="content">{$info.content|htmlspecialchars_decode}</div>
@@ -88,8 +86,8 @@
                                 <img src="{$opt.image|get_cover_url}">
                             </div>
                         </if>
-                        <div class="title container">{$opt.name}</div>
-                        <div class="status container">
+                        <div class="title">{$opt.name}</div>
+                        <div class="status clearfix">
                             <div class="number pull-left">编号: {$k+1}</div>
                             <div class="ticket pull-right">票数: <span class="text-primary">{$opt.opt_count}</span></div>
                         </div>
@@ -110,23 +108,10 @@
         <input type="hidden" value="{$info.id}" name="vote_id" />
         <php>if($canJoin) { </php>
         <div class="tb"><input type="submit" class="btn btn-primary form-control" value="确认提交" /></div>
-        <php> }else if(!empty($info['next_id'])) { $next_url = U('Vote/show','id='.$info['next_id'].'&token='.I('token').'&wecha_id='.I('wecha_id'));</php>
-        <div class="tb"><input type="button" class="btn " onClick="window.location.href='{$next_url}'" value="继续投票" /></div>
         <php> } </php>
-        <php>if(!$canJoin && !empty($event_url)) { </php>
-        <div class="tb"><a href="{$event_url}" class="btn m_10 flex_1" style="background-color:#f36637">参加抽奖活动</a></div>
-        <php> } </php>
-
-        <div class="tb" id="close_page" style="display:none"><input type="button" id="close_page_btn" class="btn m_10 flex_1" value="关闭返回" /></div>
     </form>
 </div>
 <script>
-    function init_close(){
-        $('#close_page').show();
-        $('#close_page_btn').click(function(){
-            WeixinJSBridge.invoke('closeWindow',{},function(res){;});
-        });
-    }
     $(function(){
         $(".list").click(function () {
             if ($(this).hasClass("bgBlue")) {
@@ -138,13 +123,11 @@
 
         if (typeof WeixinJSBridge == "undefined"){
             if( document.addEventListener ){
-                document.addEventListener('WeixinJSBridgeReady', init_close, false);
+//                document.addEventListener('WeixinJSBridgeReady', init_close, false);
             }else if (document.attachEvent){
-                document.attachEvent('WeixinJSBridgeReady', init_close);
-                document.attachEvent('onWeixinJSBridgeReady', init_close);
+//                document.attachEvent('WeixinJSBridgeReady', init_close);
+//                document.attachEvent('onWeixinJSBridgeReady', init_close);
             }
-        }else{
-            init_close();
         }
 
         var voteOptions = $('#vote_form').find('input[name="optArr[]"]').change(function(e) {
