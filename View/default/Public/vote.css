@@ -102,6 +102,7 @@ ul.vote-list.image li.item {
 }
 ul.vote-list.text li.item .item-wrapper,
 ul.vote-list.image li.item .item-wrapper {
+  padding: 5px;
   display: inline-block;
   box-shadow: 0 0 2px #999;
   width: 100%;
@@ -129,6 +130,15 @@ ul.vote-list.text li.item .item-wrapper .select,
 ul.vote-list.image li.item .item-wrapper .select {
   display: block;
   border-radius: 0;
+}
+ul.vote-list.text li.item .item-wrapper .select.selected,
+ul.vote-list.image li.item .item-wrapper .select.selected {
+  background: #384151;
+  border-color: #384151;
+}
+ul.vote-list.text li.item .item-wrapper .select.selected:after,
+ul.vote-list.image li.item .item-wrapper .select.selected:after {
+  content: '(已选)';
 }
 .vote-result {
   padding: 0;

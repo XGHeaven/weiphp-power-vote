@@ -64,6 +64,7 @@ ul.vote-list
     li.item
       padding 10px
       .item-wrapper
+        padding 5px
         display inline-block
         box-shadow 0 0 2px #999
         width 100%
@@ -81,6 +82,11 @@ ul.vote-list
         .select
           display block
           border-radius 0
+          &.selected
+            background desaturate(BASE_COLOR, 80%)
+            border-color @background
+            &:after
+              content '(已选)'
 
 .vote-result
   padding 0

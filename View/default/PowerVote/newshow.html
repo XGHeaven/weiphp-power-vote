@@ -78,7 +78,7 @@
         </div>
     </div>
     <php>$is_img = $info['is_img'] == 1;</php>
-    <form action="{:U( 'join' )}" onSubmit="return checkForm();" method="post">
+    <form action="{:U( 'join' )}" onSubmit="return checkForm();" method="post" id="vote_form">
         <ul class="vote-list clearfix {$is_img?'image':'text'}">
             <foreach name="opts" item="opt" key="k">
                 <li class="item">
@@ -95,7 +95,7 @@
                         </div>
                         <if condition="$canJoin">
                             <label class="btn btn-primary select">
-                                <input type="{$type}" value="{$opt.id}" name="optArr[]">
+                                <input type="{$type}" value="{$opt.id}" name="optArr[]" style="display: none">
                                 投他一票
                             </label>
                         </if>
@@ -146,6 +146,13 @@
         }else{
             init_close();
         }
+
+        var voteOptions = $('#vote_form').find('input[name="optArr[]"]').change(function(e) {
+            voteOptions.each(function() {
+                var $this = $(this);
+                $this.is(':checked') ? $this.parent().addClass('selected') : $this.parent().removeClass('selected');
+            })
+        });
     });
 </script>
 </body>
