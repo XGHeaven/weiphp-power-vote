@@ -13,7 +13,7 @@ class WeixinAddonModel extends WeixinModel {
 			$map ['id'] = $keywordArr ['aim_id'];
 		}
 		
-		$info = M ( 'vote' )->where ( $map )->order ( 'id desc' )->find ();
+		$info = M ( 'power_vote' )->where ( $map )->order ( 'id desc' )->find ();
 		if (! $info) {
 			return false;
 		}
