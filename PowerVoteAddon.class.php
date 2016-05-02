@@ -13,7 +13,7 @@ use Common\Controller\Addon;
         public $info = array(
             'name'=>'PowerVote',
             'title'=>'Power投票',
-            'description'=>'这是一个增强的插件',
+            'description'=>'这是一个增强的投票插件',
             'status'=>1,
             'author'=>'XGHeaven',
             'version'=>'0.1',
