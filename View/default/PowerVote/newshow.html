@@ -48,11 +48,29 @@
     <div class="header">投票规则</div>
     <div class="content">
         <ol>
-            <li> 起止时间: {$info.start_date|time_format} 至 {$info.end_date|time_format} </li>
+            <if condition="($info.start_date eq 0) and ($info.end_date eq 0)">
+                <li> 时间限制: 无时间限制 </li>
+            </if>
+            <if condition="($info.start_date neq 0) and ($info.end_date eq 0)">
+                <li> 时间限制: {$info.start_date|time_format} 开始, 无结束时间限制 </li>
+            </if>
+            <if condition="($info.start_date eq 0) and ($info.end_date neq 0)">
+                <li> 时间限制: {$info.end_date|time_format} 结束 </li>
+            </if>
+            <if condition="($info.start_date neq 0) and ($info.end_date neq 0)">
+                <li> 时间限制: {$info.start_date|time_format} 至 {$info.end_date|time_format} </li>
+            </if>
             <php>$type = $info['type'] == 0 ? 'radio' : 'checkbox';</php>
             <li> 本次投票为 "{$info['type'] == 0 ? '单选投票' : '多选投票'}" </li>
             <if condition="$info.is_fans eq 1">
-                <li>本次投票请在关注微信帐号 {$app.public_name}({$app.wechat}) 后使用</li>
+                <if condition="$app">
+                    <li>本次投票请在关注微信帐号 {$app.public_name}({$app.wechat}) 后使用</li>
+                <else/>
+                    <li>
+                        本次投票请在关注微信帐号后使用.
+                        <img src="{$info.qrcode|get_cover_url}" alt="">
+                    </li>
+                </if>
             </if>
         </ol>
     </div>

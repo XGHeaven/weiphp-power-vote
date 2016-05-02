@@ -239,6 +239,8 @@ class PowerVoteController extends AddonsController {
 	function result() {
 		$vote_id = I ( 'id', 0, 'intval' );
 
+		$this -> assign('app', get_token_appinfo(get_token()));
+
 		$info = $this->_getVoteInfo ( $vote_id );
 
 		$canJoin = ! empty ( $openid ) && ! empty ( $token ) && ! ($this->_is_overtime ( $vote_id )) && ! ($this->_is_join ( $vote_id, $this->mid, $token ));
