@@ -52,8 +52,7 @@
             <php>$type = $info['type'] == 0 ? 'radio' : 'checkbox';</php>
             <li> 本次投票为 "{$info['type'] == 0 ? '单选投票' : '多选投票'}" </li>
             <if condition="$info.is_fans eq 1">
-                <!-- TODO: 显示那个一个微信公众帐号 -->
-                <li>本次投票请在关注微信帐号后使用</li>
+                <li>本次投票请在关注微信帐号 {$app.public_name}({$app.wechat}) 后使用</li>
             </if>
         </ol>
     </div>
@@ -108,16 +107,9 @@
         <php> } </php>
     </form>
 </div>
+<script src="{:ADDON_PUBLIC_PATH}/vote.js?v={:SITE_VERSION}"></script>
 <script>
     $(function(){
-        if (typeof WeixinJSBridge == "undefined"){
-            if( document.addEventListener ){
-//                document.addEventListener('WeixinJSBridgeReady', init_close, false);
-            }else if (document.attachEvent){
-//                document.attachEvent('WeixinJSBridgeReady', init_close);
-//                document.attachEvent('onWeixinJSBridgeReady', init_close);
-            }
-        }
 
         var voteOptions = $('#vote_form').find('input[name="optArr[]"]').change(function(e) {
             voteOptions.each(function() {

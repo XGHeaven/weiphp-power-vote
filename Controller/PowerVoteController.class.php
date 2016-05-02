@@ -219,6 +219,8 @@ class PowerVoteController extends AddonsController {
 		$vote_id = I ( 'id', 0, 'intval' );
 		$openid = get_openid ();
 		$token = get_token ();
+
+		$this -> assign('app', get_token_appinfo($token));
 		
 		$info = $this->_getVoteInfo ( $vote_id );
 		

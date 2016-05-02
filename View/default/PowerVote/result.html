@@ -31,8 +31,7 @@
             <php>$type = $info['type'] == 0 ? 'radio' : 'checkbox';</php>
             <li> 本次投票为 "{$info['type'] == 0 ? '单选投票' : '多选投票'}" </li>
             <if condition="$info.is_fans eq 1">
-                <!-- TODO: 显示那个一个微信公众帐号 -->
-                <li>本次投票请在关注微信后使用</li>
+                <li>本次投票请在关注微信帐号 {$app.public_name}({$app.wechat}) 后使用</li>
             </if>
         </ol>
     </div>
@@ -68,5 +67,6 @@
     </ul>
     <a href="{:U('show', Array('id' => $vote_id))}" class="btn btn-primary form-control">返回</a>
 </div>
+<script src="{:ADDON_PUBLIC_PATH}/vote.js?v={:SITE_VERSION}"></script>
 </body>
 </html>
