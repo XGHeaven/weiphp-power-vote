@@ -124,10 +124,12 @@ ul.vote-list.image li.item .item-wrapper .title {
   line-height: 2;
   text-overflow: ellipsis;
   overflow: hidden;
+  font-weight: bold;
 }
 ul.vote-list.text li.item .item-wrapper .status,
 ul.vote-list.image li.item .item-wrapper .status {
   margin-bottom: 5px;
+  font-size: 0.8em;
 }
 ul.vote-list.text li.item .item-wrapper .select,
 ul.vote-list.image li.item .item-wrapper .select {
