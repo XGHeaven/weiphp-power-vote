@@ -314,17 +314,11 @@ class PowerVoteController extends AddonsController {
 		}
 		
 		// 投票信息的vote_count+1
-		$res = M ( "vote" )->where ( 'id=' . $vote_id )->setInc ( "vote_count" );
+		$res = M ( "power_vote" )->where ( 'id=' . $vote_id )->setInc ( "vote_count" );
 		
 		// 增加积分
-		add_credit ( 'vote' );
-		
-		// 连续投票
-		$next_id = M ( "power_vote" )->where ( 'id=' . $vote_id )->getField ( "next_id" );
-		if (! empty ( $next_id )) {
-			$vote_id = $next_id;
-		}
-		
+		add_credit ( 'power_vote' );
+
 		redirect ( U ( 'show', 'id=' . $vote_id ) );
 	}
 	//已过期返回 true ,否则返回 false
