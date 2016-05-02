@@ -228,7 +228,7 @@ class PowerVoteController extends AddonsController {
 		// dump(! empty ( $openid ));dump(! empty ( $token ));dump(! ($this->_is_overtime ( $vote_id )));dump(! ($this->_is_join ( $vote_id, $openid, $token )));
 		
 		$test_id = intval ( $_REQUEST ['test_id'] );
-		$this->assign ( 'event_url', event_url ( '投票', $vote_id ) );
+//		$this->assign ( 'event_url', event_url ( '投票', $vote_id ) );
 		$this->assign('mid', $this->mid);
 
 		$this->display ( T ( 'Addons://PowerVote@PowerVote/newshow' ) );
@@ -324,7 +324,7 @@ class PowerVoteController extends AddonsController {
 	//已过期返回 true ,否则返回 false
 	private function _is_overtime($vote_id) {
 		// 先看看投票期限过期与否
-		$the_vote = M ( "vote" )->where ( "id=$vote_id" )->find ();
+		$the_vote = M ( "power_vote" )->where ( "id=$vote_id" )->find ();
 		
 		if(!empty($the_vote['start_date']) && $the_vote ['start_date'] > NOW_TIME) return ture;
 		

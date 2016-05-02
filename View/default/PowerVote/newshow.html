@@ -51,20 +51,17 @@
             <li> 起止时间: {$info.start_date|time_format} 至 {$info.end_date|time_format} </li>
             <php>$type = $info['type'] == 0 ? 'radio' : 'checkbox';</php>
             <li> 本次投票为 "{$info['type'] == 0 ? '单选投票' : '多选投票'}" </li>
-            <if condition="($info.is_fans eq 1) and ($mid lt 0)">
+            <if condition="$info.is_fans eq 1">
                 <!-- TODO: 显示那个一个微信公众帐号 -->
-                <li>本次投票请在关注微信后使用</li>
+                <li>本次投票请在关注微信帐号后使用</li>
             </if>
         </ol>
     </div>
     <div class="remark">
         <php>if($canJoin) {</php>
-        <php>if($info['result_display']==0) {</php>
-        <span class="gray">已经有{$info.vote_count|intval}人投票，赶紧投下你宝贵的一票吧 :)</span>
-        <php>}</php>
-
+        <span>已经有{$info.vote_count|intval}人投票，赶紧投下你宝贵的一票吧 :)</span>
         <php>}else{</php>
-        <span class="gray">投票已过期或你已经投过票 :)</span>
+        <span>投票未开始或者已过期或你已经投过票 :)</span>
         <php>}</php>
     </div>
 </div>
@@ -113,14 +110,6 @@
 </div>
 <script>
     $(function(){
-        $(".list").click(function () {
-            if ($(this).hasClass("bgBlue")) {
-                $(this).removeClass("bgBlue").find("input").attr("checked", true);
-            } else {
-                $(this).addClass("bgBlue").find("input").attr("checked", false);
-            }
-        });
-
         if (typeof WeixinJSBridge == "undefined"){
             if( document.addEventListener ){
 //                document.addEventListener('WeixinJSBridgeReady', init_close, false);

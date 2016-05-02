@@ -84,6 +84,9 @@ article .info {
 .vote-container .header {
   color: #053284;
 }
+.vote-container .remark {
+  color: #808080;
+}
 .container-fullwidth {
   width: 100%;
 }
