@@ -99,6 +99,16 @@ ul.vote-list.image li.item {
   float: left;
   width: 50%;
 }
+ul.vote-list.image li.item:nth-child(2n) {
+  padding-right: 0;
+}
+ul.vote-list.image li.item:nth-child(2n+1) {
+  padding-left: 0;
+}
+ul.vote-list.text li.item:nth-child(n) {
+  padding-left: 0;
+  padding-right: 0;
+}
 ul.vote-list.text li.item,
 ul.vote-list.image li.item {
   padding: 10px;

@@ -61,6 +61,15 @@ ul.vote-list
     li.item
       float left
       width 50%
+      &:nth-child(2n)
+        padding-right 0
+      &:nth-child(2n+1)
+        padding-left 0
+
+  &.text
+    li.item:nth-child(n) // 提高权重
+      padding-left 0
+      padding-right 0
 
   &.text
   &.image
