@@ -87,6 +87,9 @@ article .info {
 .vote-container .remark {
   color: #808080;
 }
+.vote-container .detail {
+  word-break: break-all;
+}
 .vote-container .detail img {
   max-width: 100%;
 }
