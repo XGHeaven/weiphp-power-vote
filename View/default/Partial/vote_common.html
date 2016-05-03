@@ -28,12 +28,9 @@
             <li> 本次投票为 "{$info['type'] == 0 ? '单选投票' : '多选投票'}" </li>
             <if condition="$info.is_fans eq 1">
                 <if condition="$app">
-                    <li>本次投票请在关注微信帐号 {$app.public_name}({$app.wechat}) 后使用</li>
-                    <else/>
-                    <li>
-                        本次投票请在关注微信帐号后使用.
-                        <img src="{$info.qrcode|get_cover_url}" style="width: 100%;margin-left:-20px">
-                    </li>
+                    <li> 本次投票请在关注微信帐号 {$app.public_name} 后使用 </li>
+                <else/>
+                    <li> 本次投票请在关注微信后使用. </li>
                 </if>
             </if>
         </ol>
