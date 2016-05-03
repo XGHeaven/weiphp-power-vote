@@ -3,7 +3,17 @@ body {
   background: #eee;
 }
 .text-primary {
-  color: #053284;
+  color: #2185d0;
+}
+.btn-primary {
+  background: #2185d0;
+}
+.btn-primary:hover,
+.btn-primary:active {
+  background: #1e78bb;
+}
+.btn {
+  border: none;
 }
 /* CSS Document */
 /*微信投票*/
@@ -164,8 +174,7 @@ ul.vote-list.image li.item .item-wrapper .select {
 }
 ul.vote-list.text li.item .item-wrapper .select.selected,
 ul.vote-list.image li.item .item-wrapper .select.selected {
-  background: #8d221f;
-  border-color: #8d221f;
+  background: #22be34;
 }
 ul.vote-list.text li.item .item-wrapper .select.selected:after,
 ul.vote-list.image li.item .item-wrapper .select.selected:after {
