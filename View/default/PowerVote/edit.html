@@ -9,7 +9,7 @@
         <li class=""><a href="{:U('lists')}">投票列表</a></li>
         <li class="current"><a href="###">编辑投票<b class="arrow fa fa-sort"></b></a></li>
       </ul>
-      <div class="tab-content"> 
+      <div class="tab-content">
         <!-- 表单 -->
         <form id="form" action="{:U('edit?model='.$model['id'])}" method="post" class="form-horizontal">
           <!-- 基础文档模型 -->
@@ -197,7 +197,6 @@
 <div class="form-item cf">
 <label class="item-label">选项<span class="check-tips"> </span></label>
 <div class="controls">
-<div id="option_list">
 	<table id="option_list" class="add_list_table" cellpadding="0" cellspacing="1">
       
       <tr class="add_list add_list_head" <if condition="empty($option_list)">style="display:none"</if>>
@@ -230,6 +229,13 @@
         <a href="javascript:;" onClick="delOpt(this)" class="fr btn btn-yellow" >删除</a>
         </td>
        </tr>
+      <tr>
+          <td colspan="3">
+              <label class="textarea">
+              <textarea name="description[{$vo.id}]" id="editor_id_description_{$vo.id}">{$vo.description}</textarea>
+              </label>
+          </td>
+      </tr>
       </volist>
   	</table>
   </div>
@@ -243,28 +249,29 @@
 //上传图片
 /* 初始化上传插件 */
 var node = '';
-function initPuls(){
-	$(".uploadImage").each(function(index, obj) {
-		var id = $(obj).attr('rel');
-		if(id>0)
-			node = '#uploadImage_exist_'+id;
-		else
-		    node = '#uploadImage_'+(0-id);
-		
-		$(node).uploadify({
-			"height"          : 120,
-			"swf"             : "__STATIC__/uploadify/uploadify.swf",
-			"fileObjName"     : "download",
-			"buttonText"      : "上传图片",
-			"uploader"        : "{:U('home/File/uploadPicture',array('session_id'=>session_id()))}",
-			"width"           : 120,
-			'removeTimeout'	  : 1,
-			'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
-			"onUploadSuccess" : function(file, data, response) {
+function initPuls(id){
+    $(".uploadImage").each(function(index, obj) {
+        var id = $(obj).attr('rel');
+        if(id>0)
+            node = '#uploadImage_exist_'+id;
+        else
+            node = '#uploadImage_'+(0-id);
+        $(node).uploadify({
+            "height"          : 120,
+            "swf"             : "__STATIC__/uploadify/uploadify.swf",
+            "fileObjName"     : "download",
+            "buttonText"      : "上传图片",
+            "uploader"        : "{:U('home/File/uploadPicture',array('session_id'=>session_id()))}",
+            "width"           : 120,
+            'removeTimeout'	  : 1,
+            'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+            "onUploadSuccess" : function(file, data, response) {
                 uploadPictureimage(file, data, id);
             }
-	    });
-	});
+        });
+    });
+    $('textarea[name="description['+id+']"]').attr('id', 'editor_id_description_'+id);
+    UE.getEditor('editor_id_description_'+id);
 }
 
 function uploadPictureimage(file, data, id){
@@ -286,27 +293,39 @@ function uploadPictureimage(file, data, id){
 }
 
 function addOpt(){
-	var i = 1;
-	$('.optionSort').each(function(){i++;});
-	var id = 0-i;
-	
-	var html = '<tr class="add_list"><td class="pic_td"><div class="uploadrow" title="更改图片">'
-		+'<input type="file" class="uploadImage" id="uploadImage_'+i+'" rel="'+id+'"/>'
-		+'<input type="hidden" name="image['+id+']" id="cover_id_'+id+'"/>'
-		+'<div class="upload-img-box"></div>'
-		+'</div></td><td>'
-		+'<input type="text" value="" name="name['+id+']" class="text input-large" style="width:250px">'
-		+'</td><td>'
-		+'<input type="text" value="'+i+'" name="order['+id+']" class="optionSort text input-large" style="width:80px">&nbsp;'
-		+'</td><td>'
-		+'<a href="###" onClick="delOpt(this)" class="fr btn btn-yellow" >删除</a></td></tr>';
-	$('#option_list').append(html);
-	initPuls(); 
+    var i = 1;
+    $('.optionSort').each(function(){i++;});
+    var id = 0-i;
+
+    var html = '<tr class="add_list"><td class="pic_td"><div class="uploadrow" title="更改图片">'
+            +'<input type="file" class="uploadImage" id="uploadImage_'+i+'" rel="'+id+'"/>'
+            +'<input type="hidden" name="image['+id+']" id="cover_id_'+id+'"/>'
+            +'<div class="upload-img-box"></div>'
+            +'</div></td><td>'
+            +'<input type="text" value="" name="name['+id+']" class="text input-large" style="width:250px">'
+            +'</td><td>'
+            +'<input type="text" value="'+i+'" name="order['+id+']" class="optionSort text input-large" style="width:80px">&nbsp;'
+            +'</td><td>'
+            +'<a href="###" onClick="delOpt(this)" class="fr btn btn-yellow" >删除</a></td></tr>'
+            +'<tr>'
+            +'<td colspan="3">'
+            +'<label class="textarea">'
+            +'<textarea name="description['+id+']"></textarea>'
+//        +'{#hook('adminArticleEdit', array('name'=>$field['name'],'value'=>$field['value']))} </label>'
+            +'</td>'
+            +'</tr>';
+    $('#option_list').append(html);
+
+    initPuls(id);
     changeOption();
-	$('.add_list_head').show();
+    $('.add_list_head').show();
 }
 function delOpt(obj){
-	$(obj).parents('tr').remove();
+    var self = $(obj).parents('tr');
+    var editor = self.next().remove();
+    UE.getEditor( editor.find('textarea').attr('id') ).destroy();
+    editor.remove();
+    self.remove();
 }
 function changeOption(){
 	var val = $('input[name="is_img"]:checked').val();
@@ -333,7 +352,11 @@ function changeOption(){
 }
 $(function(){ 
    initPuls(); 
-   changeOption(); 
+   changeOption();
+    window.UEDITOR_CONFIG.initialFrameHeight = '300px';
+    $('textarea[name^=description]').each(function() {
+        UE.getEditor(this.id);
+    });
 });
 </script> 
             </div>
@@ -345,7 +368,7 @@ $(function(){
           </div>
         </form>
         <!-- 预览 -->
-        <include file="Addons/weixinPreview" />  
+        <include file="Addons/weixinPreview" />
       </div>
     </section>
   </div>

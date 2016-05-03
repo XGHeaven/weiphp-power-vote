@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `wp_power_vote_option` (
 `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
 `vote_id`  int(10) unsigned NOT NULL   COMMENT '投票ID',
 `name`  varchar(255) NOT NULL  COMMENT '选项标题',
+`description`  text NOT NULL  COMMENT '选项描述',
 `image`  int(10) unsigned NOT NULL   COMMENT '图片选项',
 `opt_count`  int(10) unsigned NOT NULL   DEFAULT 0 COMMENT '当前选项投票数',
 `order`  int(10) unsigned NOT NULL   DEFAULT 0 COMMENT '选项排序',
@@ -56,6 +57,7 @@ INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_s
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('image','图片选项','int(10) unsigned NOT NULL ','picture','','','5','','0','0','1','1388984467','1388933679','','3','','regex','','3','function');
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('opt_count','当前选项投票数','int(10) unsigned NOT NULL ','num','0','','0','','0','0','1','1388933860','1388933860','','3','','regex','','3','function');
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('order','选项排序','int(10) unsigned NOT NULL ','num','0','','1','','0','0','1','1388933951','1388933951','','3','','regex','','3','function');
+INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('description','选项描述','text NOT NULL','editor','','','0','','0','0','1','1400633517','1388931173','','3','','regex','','3','function');
 UPDATE `wp_attribute` SET model_id= (SELECT MAX(id) FROM `wp_model`) WHERE model_id=0;
 
 CREATE TABLE IF NOT EXISTS `wp_power_vote_log` (

@@ -1,6 +1,7 @@
 @charset "utf-8";
 
 BASE_COLOR = #053284;
+COLOR_BUTTON = #c9302c;
 
 body {
   background #eeeeee
@@ -96,7 +97,7 @@ ul.vote-list
         .select
           display block
           &.selected
-            background desaturate(BASE_COLOR, 80%)
+            background darken(COLOR_BUTTON, 30%)
             border-color @background
             &:after
               content '(已选)'

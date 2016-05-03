@@ -147,8 +147,8 @@ ul.vote-list.image li.item .item-wrapper .select {
 }
 ul.vote-list.text li.item .item-wrapper .select.selected,
 ul.vote-list.image li.item .item-wrapper .select.selected {
-  background: #384151;
-  border-color: #384151;
+  background: #8d221f;
+  border-color: #8d221f;
 }
 ul.vote-list.text li.item .item-wrapper .select.selected:after,
 ul.vote-list.image li.item .item-wrapper .select.selected:after {

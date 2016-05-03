@@ -7,7 +7,7 @@
         <li class=""><a href="{:U('lists')}">投票列表<b class="arrow fa fa-sort"></b></a></li>
         <li class="current"><a href="###">新增投票<b class="arrow fa fa-sort"></b></a></li>
       </ul>
-      <div class="tab-content"> 
+      <div class="tab-content">
         <!-- 表单 -->
         <php> $post_url || $post_url = U('add?model='.$model['id'], $get_param);</php>
         <form id="form" action="{$post_url}" method="post" class="form-horizontal form-center">
@@ -44,7 +44,7 @@
                         </case>
                         <case value="date">
                           <input type="datetime" name="{$field.name}" class="input-large date" value="{:I($field[name], $field[value])}" placeholder="请选择日期" />
-                        </case>                        
+                        </case>
                         <case value="bool">
                           <select name="{$field.name}">
                             <volist name=":parse_field_attr($field['extra'])" id="vo"> <option value="{$key}" class="toggle-data" toggle-data="{$vo|get_hide_attr}"
@@ -66,17 +66,17 @@
                         <case value="cascade">
                         <div id="cascade_{$field.name}"></div>
                         {:hook('cascade', array('name'=>$field['name'],'value'=>$field['value'],'extra'=>$field['extra']))}
-                        </case>                        
+                        </case>
                         <case value="radio">
                           <volist name=":parse_field_attr($field['extra'])" id="vo">
                             <div class="check-item">
-							<!--[if !IE]><!-->  
+							<!--[if !IE]><!-->
 								  <input type="radio" class="regular-radio toggle-data" value="{$key}" id="{$field.name}_{$key}" name="{$field.name}" toggle-data="{$vo|get_hide_attr}"
 								  <eq name="field.value" value="$key">checked</eq> />
-								  <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr} 
+								  <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr}
 							   <!--<![endif]-->
 							   <!--[if IE]>
-							       <input type="radio" value="{$key}" 
+							       <input type="radio" value="{$key}"
 								   id="{$field.name}_{$key}" name="{$field.name}" class="toggle-data" toggle-data="{$vo|get_hide_attr}"
 								  <eq name="field.value" value="$key">checked="checked"</eq> />
 								  <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr}
@@ -89,7 +89,7 @@
                             <div class="check-item">
                               <input type="checkbox" class="regular-checkbox toggle-data" value="{$key}" id="{$field.name}_{$key}" name="{$field.name}[]" toggle-data="{$vo|get_hide_attr}"
                               <in name="key" value="$field['value']" >checked="checked"</in> >
-                              <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr} 
+                              <label for="{$field.name}_{$key}"></label>{$vo|clean_hide_attr}
                               </div>
                           </volist>
                         </case>
@@ -181,7 +181,7 @@
 							            },1500);
 							        }
 							    }
-								</script> 
+								</script>
                         </case>
                         <default/>
                         <input type="text" class="text input-large" name="{$field.name}" value="{:I($field[name], $field[value])}">
@@ -208,16 +208,16 @@
 <label class="item-label">选项<span class="check-tips"> </span></label>
 <div class="controls">
 	<table id="option_list" class="add_list_table" cellpadding="0" cellspacing="1">
-      
+
       <tr class="add_list add_list_head" <if condition="empty($option_list)">style="display:none"</if>>
       	<td class="pic_td">图片</td>
         <td>标题</td>
         <td>排序</td>
         <td>操作</td>
       </tr>
-      
+
       <volist name='option_list' id='vo'>
-      
+
       <tr class="add_list">
      	<td class="pic_td">
         <div class="uploadrow" title="更改图片">
@@ -240,6 +240,13 @@
         <a href="javascript:;" onClick="delOpt(this)" class="fr btn btn-yellow" >删除</a>
         </td>
        </tr>
+      <tr>
+         <td colspan="3">
+             <label class="textarea">
+             <textarea name="description[{$vo.id}]"></textarea>
+             </label>
+         </td>
+      </tr>
       </volist>
       </table>
   </div>
@@ -253,7 +260,7 @@
 //上传图片
 /* 初始化上传插件 */
 var node = '';
-function initPuls(){
+function initPuls(id){
 	$(".uploadImage").each(function(index, obj) {
 		var id = $(obj).attr('rel');
 		if(id>0)
@@ -274,6 +281,8 @@ function initPuls(){
             }
 	    });
 	});
+    $('textarea[name="description['+id+']"]').attr('id', 'editor_id_description_'+id);
+    UE.getEditor('editor_id_description_'+id);
 }
 
 function uploadPictureimage(file, data, id){
@@ -298,7 +307,7 @@ function addOpt(){
 	var i = 1;
 	$('.optionSort').each(function(){i++;});
 	var id = 0-i;
-	
+
 	var html = '<tr class="add_list"><td class="pic_td"><div class="uploadrow" title="更改图片">'
 		+'<input type="file" class="uploadImage" id="uploadImage_'+i+'" rel="'+id+'"/>'
 		+'<input type="hidden" name="image['+id+']" id="cover_id_'+id+'"/>'
@@ -308,14 +317,26 @@ function addOpt(){
 		+'</td><td>'
 		+'<input type="text" value="'+i+'" name="order['+id+']" class="optionSort text input-large" style="width:80px">&nbsp;'
 		+'</td><td>'
-		+'<a href="###" onClick="delOpt(this)" class="fr btn btn-yellow" >删除</a></td></tr>';
+		+'<a href="###" onClick="delOpt(this)" class="fr btn btn-yellow" >删除</a></td></tr>'
+        +'<tr>'
+        +'<td colspan="3">'
+        +'<label class="textarea">'
+        +'<textarea name="description['+id+']"></textarea>'
+//        +'{#hook('adminArticleEdit', array('name'=>$field['name'],'value'=>$field['value']))} </label>'
+        +'</td>'
+        +'</tr>';
 	$('#option_list').append(html);
-	initPuls(); 
+
+    initPuls(id);
     changeOption();
 	$('.add_list_head').show();
 }
 function delOpt(obj){
-	$(obj).parents('tr').remove();
+	var self = $(obj).parents('tr');
+    var editor = self.next().remove();
+    UE.getEditor( editor.find('textarea').attr('id') ).destroy();
+    editor.remove();
+    self.remove();
 }
 function changeOption(){
 	var val = $('input[name="is_img"]:checked').val();
@@ -332,18 +353,19 @@ function changeOption(){
 	}else{
 	   $('.uploadify').each(function() {
           $(this).show();
-       });	
+       });
 	   $('.upload-img-box').each(function() {
           $(this).show();
-       });	   
-	   $('.pic_td').show();	
+       });
+	   $('.pic_td').show();
 	}
 }
-$(function(){ 
-   initPuls(); 
-   changeOption(); 
+$(function(){
+   initPuls();
+   changeOption();
+    window.UEDITOR_CONFIG.initialFrameHeight = '300px';
 });
-</script> 
+</script>
 
             </div>
           </volist>
@@ -352,7 +374,7 @@ $(function(){
           </div>
         </form>
         <!-- 预览 -->
-        <include file="Addons/weixinPreview" />  
+        <include file="Addons/weixinPreview" />
       </div>
     </section>
   </div>
@@ -363,8 +385,8 @@ $(function(){
     <link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
     ';</php>
   <link href="__STATIC__/datetimepicker/css/dropdown.css?v={:SITE_VERSION}" rel="stylesheet" type="text/css">
-  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.js"></script> 
-  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script> 
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.js"></script>
+  <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js?v={:SITE_VERSION}" charset="UTF-8"></script>
   <script type="text/javascript">
 $('#submit').click(function(){
     $('#form').submit();
@@ -382,19 +404,19 @@ $(function(){
         language:"zh-CN",
         minView:2,
         autoclose:true
-    });	
+    });
     showTab();
-	
+
 	$('.toggle-data').each(function(){
 		var data = $(this).attr('toggle-data');
-		if(data=='') return true;		
-		
+		if(data=='') return true;
+
 	     if($(this).is(":selected") || $(this).is(":checked")){
 			 change_event(this)
 		 }
 	});
-	
+
 	$('.toggle-data').bind("click",function(){ change_event(this) });
 });
-</script> 
+</script>
 </block>

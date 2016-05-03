@@ -17,6 +17,7 @@ class PowerVoteOptionModel extends Model {
 			$opt_data ['name'] = $opt;
 			$opt_data ['image'] = $post ['image'] [$key];
 			$opt_data ['order'] = intval ( $post ['order'] [$key] );
+			$opt_data ['description'] = $post['description'][$key];
 			if ($key > 0) {
 				// 更新选项
 				$optIds [] = $map ['id'] = $key;
