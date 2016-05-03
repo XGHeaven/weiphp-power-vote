@@ -75,6 +75,11 @@ ul.vote-list
   &.text
   &.image
     li.item
+      a
+        color black
+        &:hover
+        &:active
+          color black
       padding 10px
       .item-wrapper
         padding 5px
@@ -82,7 +87,7 @@ ul.vote-list
         box-shadow 0 0 2px #999
         width 100%
         .img-wrapper
-          min-height 150px
+          min-height 100px
           img
             width 100%
             margin auto
@@ -91,6 +96,7 @@ ul.vote-list
           text-overflow ellipsis
           overflow hidden
           font-weight bold
+          text-align center
         .status
           margin-bottom 5px
           font-size 0.8em
@@ -105,3 +111,8 @@ ul.vote-list
 .vote-result
   padding 0
   list-style none
+
+.option-wrapper
+  padding 10px 0
+  img
+    width 100%

@@ -236,6 +236,23 @@ class PowerVoteController extends AddonsController {
 		$this->display ( T ( 'Addons://PowerVote@PowerVote/newshow' ) );
 	}
 
+	function detail() {
+		$vote_id = I('id', 0, 'intval');
+		$option_id = I('option', 0, 'intval');
+
+		$info = $this -> _getVoteInfo($vote_id);
+		$option = $this -> _getOptionInfo($vote_id, $option_id);
+
+		if (empty($option_id)) {
+			$this -> error('错误的投票候选信息');
+		}
+
+		$this -> assign('info', $info);
+		$this -> assign('option', $option);
+
+		$this -> display(T('Addons://PowerVote@PowerVote/detail'));
+	}
+
 	function result() {
 		$vote_id = I ( 'id', 0, 'intval' );
 
@@ -274,6 +291,11 @@ class PowerVoteController extends AddonsController {
 		$this->assign ( 'vote_id', $id);
 		return $info;
 	}
+
+	private function _getOptionInfo($vote_id, $option_id) {
+		return M('power_vote_option') -> where(Array('id' => $option_id, 'vote_id' => $vote_id)) -> find();
+	}
+
 	// 用户投票信息
 	function join() {
 		$token = get_token ();

@@ -16,7 +16,7 @@
 <include file="Addons://PowerVote@Partial/vote_common"/>
 <div class="vote-container">
     <div class="header">
-        投票列表
+        投票列表(点击查看详细介绍)
         <div class="addon pull-right">
             <a href="{:U('result', Array('id' => $vote_id))}">查看投票结果 &gt;</a>
         </div>
@@ -26,20 +26,22 @@
         <ul class="vote-list clearfix {$is_img?'image':'text'}">
             <foreach name="opts" item="opt" key="k">
                 <li class="item">
-                    <div class="item-wrapper">
-                        <if condition="$is_img">
-                            <div class="img-wrapper">
-                                <img src="{$opt.image|get_cover_url}">
-                            </div>
-                        </if>
-                        <div class="title">{$opt.name}</div>
-                        <if condition="$canJoin">
-                            <label class="btn btn-primary select">
-                                <input type="{$type}" value="{$opt.id}" name="optArr[]" style="display: none">
-                                投他一票
-                            </label>
-                        </if>
-                    </div>
+                    <a href="{:U('detail', Array('id' => $vote_id, 'option' => $opt['id']))}">
+                        <div class="item-wrapper">
+                            <if condition="$is_img">
+                                <div class="img-wrapper">
+                                    <img src="{$opt.image|get_cover_url}">
+                                </div>
+                            </if>
+                            <div class="title">{$opt.name}</div>
+                            <if condition="$canJoin">
+                                <label class="btn btn-primary select">
+                                    <input type="{$type}" value="{$opt.id}" name="optArr[]" style="display: none">
+                                    投他一票
+                                </label>
+                            </if>
+                        </div>
+                    </a>
                 </li>
             </foreach>
         </ul>

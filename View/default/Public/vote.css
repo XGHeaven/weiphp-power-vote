@@ -113,6 +113,16 @@ ul.vote-list.text li.item,
 ul.vote-list.image li.item {
   padding: 10px;
 }
+ul.vote-list.text li.item a,
+ul.vote-list.image li.item a {
+  color: #000;
+}
+ul.vote-list.text li.item a:hover,
+ul.vote-list.image li.item a:hover,
+ul.vote-list.text li.item a:active,
+ul.vote-list.image li.item a:active {
+  color: #000;
+}
 ul.vote-list.text li.item .item-wrapper,
 ul.vote-list.image li.item .item-wrapper {
   padding: 5px;
@@ -122,7 +132,7 @@ ul.vote-list.image li.item .item-wrapper {
 }
 ul.vote-list.text li.item .item-wrapper .img-wrapper,
 ul.vote-list.image li.item .item-wrapper .img-wrapper {
-  min-height: 150px;
+  min-height: 100px;
 }
 ul.vote-list.text li.item .item-wrapper .img-wrapper img,
 ul.vote-list.image li.item .item-wrapper .img-wrapper img {
@@ -135,6 +145,7 @@ ul.vote-list.image li.item .item-wrapper .title {
   text-overflow: ellipsis;
   overflow: hidden;
   font-weight: bold;
+  text-align: center;
 }
 ul.vote-list.text li.item .item-wrapper .status,
 ul.vote-list.image li.item .item-wrapper .status {
@@ -157,4 +168,10 @@ ul.vote-list.image li.item .item-wrapper .select.selected:after {
 .vote-result {
   padding: 0;
   list-style: none;
+}
+.option-wrapper {
+  padding: 10px 0;
+}
+.option-wrapper img {
+  width: 100%;
 }
