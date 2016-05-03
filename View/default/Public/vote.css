@@ -174,11 +174,11 @@ ul.vote-list.image li.item .item-wrapper .select {
 }
 ul.vote-list.text li.item .item-wrapper .select.selected,
 ul.vote-list.image li.item .item-wrapper .select.selected {
-  background: #22be34;
+  background: #175d92;
 }
-ul.vote-list.text li.item .item-wrapper .select.selected:after,
-ul.vote-list.image li.item .item-wrapper .select.selected:after {
-  content: '(已选)';
+ul.vote-list.text li.item .item-wrapper .select.selected .glyphicon,
+ul.vote-list.image li.item .item-wrapper .select.selected .glyphicon {
+  display: inline !important;
 }
 .vote-result {
   padding: 0;

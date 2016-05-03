@@ -3,7 +3,7 @@
 BASE_COLOR = #053284;
 COLOR_BUTTON = #c9302c;
 PRIMARY_COLOR = #2185d0;
-COLOR_SELECT = #22be34;
+COLOR_SELECT = darken(PRIMARY_COLOR, 30%);
 
 body {
   background #eeeeee
@@ -118,8 +118,8 @@ ul.vote-list
           display block
           &.selected
             background COLOR_SELECT
-            &:after
-              content '(已选)'
+            .glyphicon
+              display inline!important
 
 .vote-result
   padding 0
