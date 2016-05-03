@@ -8,7 +8,7 @@ def check(path):
             clone(path)
 
 def clone(path):
-    run('git clone https://github.com/XGHeaven/weiphp-power-vote.git %s' % path);
+    run('git clone --depth 1 https://github.com/XGHeaven/weiphp-power-vote.git %s' % path);
 
 def pull(path):
     with cd(path):
