@@ -6,7 +6,7 @@
 </notempty>
 <div class="vote-container">
     <div class="header">活动说明</div>
-    <div class="content">{$info.content|htmlspecialchars_decode}</div>
+    <div class="content">{$info.description|htmlspecialchars_decode}</div>
 </div>
 <div class="vote-container">
     <div class="header">投票规则</div>
@@ -30,9 +30,10 @@
                 <if condition="$app">
                     <li> 本次投票请在关注微信帐号 {$app.public_name} 后使用 </li>
                 <else/>
-                    <li> 本次投票请在关注微信后使用. </li>
+                    <li> 本次投票请在关注微信后使用 </li>
                 </if>
             </if>
+            <li>请您在喜欢的选项下面点击“为他投票”进行选择,最后统一点击提交生效此次投票</li>
         </ol>
     </div>
     <div class="remark">

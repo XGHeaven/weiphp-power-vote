@@ -16,7 +16,7 @@
 <include file="Addons://PowerVote@Partial/vote_common"/>
 <div class="vote-container">
     <div class="header">
-        投票列表(点击查看详细介绍)
+        投票列表(点击查看介绍)
         <div class="addon pull-right">
             <a href="{:U('result', Array('id' => $vote_id))}">投票结果 &gt;</a>
         </div>
@@ -37,7 +37,7 @@
                             <if condition="$canJoin">
                                 <label class="btn btn-primary select">
                                     <input type="{$type}" value="{$opt.id}" name="optArr[]" style="display: none">
-                                    投他一票
+                                    为他投票
                                     <i class="glyphicon glyphicon-ok hidden"></i>
                                 </label>
                             </if>
