@@ -260,10 +260,8 @@ class PowerVoteController extends AddonsController {
 		
 		$map ['id'] = $map2 ['vote_id'] = intval ( $id );
 		$info = M ( 'power_vote' )->where ( $map )->find ();
-		// dump(M ( 'vote' )->getLastSql());
 		$this->assign ( 'info', $info );
 		
-		// dump($info);
 		$opts = M ( 'power_vote_option' )->where ( $map2 )->order ( '`order` asc' )->select ();
 		foreach ( $opts as $p ) {
 			$total += $p ['opt_count'];
@@ -271,7 +269,6 @@ class PowerVoteController extends AddonsController {
 		foreach ( $opts as &$vo ) {
 			$vo ['percent'] = round ( $vo ['opt_count'] * 100 / $total, 1 );
 		}
-		// dump($opts);
 		$this->assign ( 'opts', $opts );
 		$this->assign ( 'num_total', $total );
 		$this->assign ( 'vote_id', $id);
@@ -288,7 +285,7 @@ class PowerVoteController extends AddonsController {
         if( empty($info) ) {
             $this->error('不存在该投票');
         }
-        if($info.is_fans && $this->mid < 0 ) {
+        if($info['is_fans'] && $this->mid < 0 ) {
             $this->error('请先关注微信号才能投票');
         }
 		// 检查ID是否合法
@@ -304,6 +301,10 @@ class PowerVoteController extends AddonsController {
 		if (empty ( $_POST ['optArr'] )) {
 			$this->error ( "请先选择投票项" );
 		}
+		if (count($opts_ids) < $info['min_num']) {
+			$this -> error("请最少选择 {$info['min_num']} 项");
+		}
+
 		// 如果没投过，就添加
 		$data ["user_id"] = $this->mid;
 		$data ["vote_id"] = $vote_id;

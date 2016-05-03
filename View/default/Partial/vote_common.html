@@ -25,7 +25,7 @@
                 <li> 时间限制: {$info.start_date|time_format} 至 {$info.end_date|time_format} </li>
             </if>
             <php>$type = $info['type'] == 0 ? 'radio' : 'checkbox';</php>
-            <li> 本次投票为 "{$info['type'] == 0 ? '单选投票' : '多选投票'}" </li>
+            <li> 本次投票为 "{$info['type'] == 0 ? '单选投票' : '多选投票'}", 最少选择 {$info.min_num} 项 </li>
             <if condition="$info.is_fans eq 1">
                 <if condition="$app">
                     <li> 本次投票请在关注微信帐号 {$app.public_name} 后使用 </li>

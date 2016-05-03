@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS `wp_power_vote` (
 `is_img`  tinyint(2) NOT NULL  DEFAULT 0 COMMENT '文字/图片投票',
 -- `qrcode`  int(10) UNSIGNED NOT NULL  COMMENT '二维码',
 `is_fans`  char(50) NOT NULL  DEFAULT 1 COMMENT '是否需要关注',
+`min_num`  int(10) unsigned NOT NULL DEFAULT 1 COMMENT '最小投票数字',
 PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci CHECKSUM=0 ROW_FORMAT=DYNAMIC DELAY_KEY_WRITE=0;
 INSERT INTO `wp_power_vote` (`id`,`keyword`,`title`,`description`,`picurl`,`type`,`start_date`,`end_date`,`is_img`,`vote_count`,`cTime`,`mTime`,`token`,`content`,`is_fans`,`qrcode`) VALUES ('33','投票','最美照片','呃绕弯儿','365','1','1439349000','1440126600','1','1','1439449257','2147483647','gh_8146957b348c','<p><img src="/Uploads/Editor/gh_8146957b348c/2015-08-12/55cac0519c7fb.jpg" style="float:none;" title="00023f006d1b1009ba7303.jpg"/></p><p><img src="/Uploads/Editor/gh_8146957b348c/2015-08-12/55cac055591ef.jpg" style="float:none;" title="00023f006d1b1009bec914.jpg"/></p><p><br/></p>','1','373');
@@ -34,6 +35,7 @@ INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_s
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('is_img','文字/图片投票','tinyint(2) NOT NULL','radio','0','','0','0:文字投票\r\n1:图片投票','0','1','1','1389081985','1388931941','','3','','regex','','3','function');
 -- INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('qrcode','二维码','int(10) UNSIGNED NOT NULL','picture','','微信二维码','1','','0','1','1','1439448890','1439448822','','3','','regex','','3','function');
 INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('is_fans','是否需要关注','char(50) NOT NULL','select','1','','1','1:是\r\n0:否','0','0','1','1439351098','1439350993','','3','','regex','','3','function');
+INSERT INTO `wp_attribute` (`name`,`title`,`field`,`type`,`value`,`remark`,`is_show`,`extra`,`model_id`,`is_must`,`status`,`update_time`,`create_time`,`validate_rule`,`validate_time`,`error_info`,`validate_type`,`auto_rule`,`auto_time`,`auto_type`) VALUES ('min_num','最小投票数量','int(10) unsigned NOT NULL ','num','1','未填写时,默认是1,如果当前是单选状态,那么自动忽略','1','','0','0','1','1388932035','1388932035','','3','','regex','','3','function');
 UPDATE `wp_attribute` SET model_id= (SELECT MAX(id) FROM `wp_model`) WHERE model_id=0;
 
 CREATE TABLE IF NOT EXISTS `wp_power_vote_option` (
