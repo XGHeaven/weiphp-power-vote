@@ -384,7 +384,7 @@ class PowerVoteController extends AddonsController {
 		$token = get_token();
 		$overtime = $this -> _is_overtime($vote_id);
 		$this -> assign('overtime', $overtime);
-		$this -> assign('canJoin', $this->_is_join ( $vote_id, $this->mid, $token ));
+		$this -> assign('canJoin', !$this->_is_join ( $vote_id, $this->mid, $token ));
 		$this -> assign('joinError', $open_id==-1 || $token==-1);
 	}
 }
