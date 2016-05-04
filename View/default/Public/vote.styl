@@ -70,21 +70,14 @@ article .info{ margin:0 15px 15px; color:red;font-size: 21px;font-weight: bolder
 
 ul.vote-list
   list-style none
-  width 100%
   padding 0
+  margin-left -10px
+  margin-right -10px
   &.image
     li.item
-      float left
+      display inline-block
+      vertical-align top
       width 50%
-      &:nth-child(2n)
-        padding-right 0
-      &:nth-child(2n+1)
-        padding-left 0
-
-  &.text
-    li.item:nth-child(n) // 提高权重
-      padding-left 0
-      padding-right 0
 
   &.text
   &.image
