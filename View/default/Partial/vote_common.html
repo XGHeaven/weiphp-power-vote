@@ -37,10 +37,20 @@
         </ol>
     </div>
     <div class="remark">
-        <php>if($canJoin) {</php>
-        <span>已经有{$info.vote_count|intval}人投票，赶紧投下你宝贵的一票吧 :)</span>
-        <php>}else{</php>
-        <span>投票未开始或者已过期或你已经投过票 :)</span>
-        <php>}</php>
+        <switch name="overtime">
+            <case value="1">活动暂未开始,请等待</case>
+            <case value="-1">活动已经结束,感谢参与</case>
+            <case value="0">
+                <if condition="$canJoin">
+                    已经有{$info.vote_count|intval}人投票，赶紧投下你宝贵的一票吧 :)
+                <else/>
+                    <if condition="$joinError">
+                        请您关注 {$app.public_name} 微信号
+                    <else/>
+                        您已经投过票了,感谢您的参与
+                    </if>
+                </if>
+            </case>
+        </switch>
     </div>
 </div>

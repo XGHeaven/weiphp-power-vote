@@ -223,9 +223,10 @@ class PowerVoteController extends AddonsController {
 		$this -> assign('app', get_token_appinfo($token));
 		
 		$info = $this->_getVoteInfo ( $vote_id );
+		$this -> inject_can_join($vote_id);
 		
-		$canJoin = ! empty ( $openid ) && ! empty ( $token ) && ! ($this->_is_overtime ( $vote_id )) && ! ($this->_is_join ( $vote_id, $this->mid, $token ));
-		$this->assign ( 'canJoin', $canJoin );
+//		$canJoin = ! empty ( $openid ) && ! empty ( $token ) && ! ($this->_is_overtime ( $vote_id )) && ! ($this->_is_join ( $vote_id, $this->mid, $token ));
+//		$this->assign ( 'canJoin', $canJoin );
 		// dump ( $canJoin );
 		// dump(! empty ( $openid ));dump(! empty ( $token ));dump(! ($this->_is_overtime ( $vote_id )));dump(! ($this->_is_join ( $vote_id, $openid, $token )));
 		
@@ -247,6 +248,7 @@ class PowerVoteController extends AddonsController {
 			$this -> error('错误的投票候选信息');
 		}
 
+		$this -> inject_can_join($vote_id);
 		$this -> assign('info', $info);
 		$this -> assign('option', $option);
 
@@ -259,12 +261,9 @@ class PowerVoteController extends AddonsController {
 		$this -> assign('app', get_token_appinfo(get_token()));
 
 		$info = $this->_getVoteInfo ( $vote_id );
-
-		$canJoin = ! empty ( $openid ) && ! empty ( $token ) && ! ($this->_is_overtime ( $vote_id )) && ! ($this->_is_join ( $vote_id, $this->mid, $token ));
-		$this->assign ( 'canJoin', $canJoin );
+		$this -> inject_can_join($vote_id);
 
 		$test_id = intval ( $_REQUEST ['test_id'] );
-		$this->assign ( 'event_url', event_url ( '投票', $vote_id ) );
 		$this->assign('mid', $this->mid);
 
 		$this->display ( T ( 'Addons://PowerVote@PowerVote/result' ) );
@@ -297,68 +296,73 @@ class PowerVoteController extends AddonsController {
 	}
 
 	// 用户投票信息
-	function join() {
-		$token = get_token ();
-		$opts_ids = array_filter ( I ( 'post.optArr' ) );
+	function join()
+	{
+		$token = get_token();
+		$opts_ids = array_filter(I('post.optArr'));
 
-		$vote_id = intval ( $_POST ["vote_id"] );
+		$vote_id = intval($_POST ["vote_id"]);
 
-        $info = $this->_getVoteInfo ( $vote_id );
-        if( empty($info) ) {
-            $this->error('不存在该投票');
-        }
-        if($info['is_fans'] && $this->mid < 0 ) {
-            $this->error('请先关注微信号才能投票');
-        }
+		$info = $this->_getVoteInfo($vote_id);
+		if (empty($info)) {
+			$this->error('不存在该投票');
+		}
+		if ($info['is_fans'] && $this->mid < 0) {
+			$this->error('请先关注微信号才能投票');
+		}
 		// 检查ID是否合法
-		if (empty ( $vote_id ) || 0 == $vote_id) {
-			$this->error ( "错误的投票ID" );
+		if (empty ($vote_id) || 0 == $vote_id) {
+			$this->error("错误的投票ID");
 		}
-		if ($this->_is_overtime ( $vote_id )) {
-			$this->error ( "请在指定的时间内投票" );
+		if ($this->_is_overtime($vote_id)) {
+			$this->error("请在指定的时间内投票");
 		}
-		if ($this->_is_join ( $vote_id, $this->mid, $token )) {
-			$this->error ( "您已经投过,请不要重复投" );
+		if ($this->_is_join($vote_id, $this->mid, $token)) {
+			$this->error("您已经投过,请不要重复投");
 		}
-		if (empty ( $_POST ['optArr'] )) {
-			$this->error ( "请先选择投票项" );
+		if (empty ($_POST ['optArr'])) {
+			$this->error("请先选择投票项");
 		}
 		if (count($opts_ids) < $info['min_num']) {
-			$this -> error("请最少选择 {$info['min_num']} 项");
+			$this->error("请最少选择 {$info['min_num']} 项");
 		}
 
 		// 如果没投过，就添加
 		$data ["user_id"] = $this->mid;
 		$data ["vote_id"] = $vote_id;
 		$data ["token"] = $token;
-		$data ["options"] = implode ( ',', $opts_ids );
-		$data ["cTime"] = time ();
-		$addid = M ( "power_vote_log" )->add ( $data );
+		$data ["options"] = implode(',', $opts_ids);
+		$data ["cTime"] = time();
+		$addid = M("power_vote_log")->add($data);
 		// 投票选项信息的num+1
-		foreach ( $opts_ids as $v ) {
-			$v = intval ( $v );
-			$res = M ( "power_vote_option" )->where ( 'id=' . $v )->setInc ( "opt_count" );
+		foreach ($opts_ids as $v) {
+			$v = intval($v);
+			$res = M("power_vote_option")->where('id=' . $v)->setInc("opt_count");
 		}
-		
-		// 投票信息的vote_count+1
-		$res = M ( "power_vote" )->where ( 'id=' . $vote_id )->setInc ( "vote_count" );
-		
-		// 增加积分
-		add_credit ( 'power_vote' );
 
-		redirect ( U ( 'show', 'id=' . $vote_id ) );
+		// 投票信息的vote_count+1
+		$res = M("power_vote")->where('id=' . $vote_id)->setInc("vote_count");
+
+		// 增加积分
+		add_credit('power_vote');
+
+		redirect(U('show', 'id=' . $vote_id));
 	}
-	//已过期返回 true ,否则返回 false
+
+	/**
+	 * @param $vote_id
+	 * @return int 0-正在进行中 1-还未开始 -1-已经结束
+	 */
 	private function _is_overtime($vote_id) {
 		// 先看看投票期限过期与否
 		$the_vote = M ( "power_vote" )->where ( "id=$vote_id" )->find ();
 		
-		if(!empty($the_vote['start_date']) && $the_vote ['start_date'] > NOW_TIME) return ture;
+		if(!empty($the_vote['start_date']) && $the_vote ['start_date'] > NOW_TIME) return 1;
 		
 		$deadline = $the_vote ['end_date'] + 86400;
-		if(!empty($the_vote['end_date']) && $deadline <= NOW_TIME) return ture;
+		if(!empty($the_vote['end_date']) && $deadline <= NOW_TIME) return -1;
 		
-		return false;
+		return 0;
 	}
 	private function _is_join($vote_id, $user_id, $token) {
 		// $vote_limit = M ( 'vote' )->where ( 'id=' . $vote_id )->getField ( 'vote_limit' );
@@ -374,5 +378,13 @@ class PowerVoteController extends AddonsController {
 			return true;
 		}
 		return false;
+	}
+	private function inject_can_join($vote_id) {
+		$open_id = get_openid();
+		$token = get_token();
+		$overtime = $this -> _is_overtime($vote_id);
+		$this -> assign('overtime', $overtime);
+		$this -> assign('canJoin', $this->_is_join ( $vote_id, $this->mid, $token ));
+		$this -> assign('joinError', $open_id==-1 || $token==-1);
 	}
 }
