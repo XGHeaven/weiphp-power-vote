@@ -16,7 +16,7 @@ use Common\Controller\Addon;
             'description'=>'这是一个增强的投票插件',
             'status'=>1,
             'author'=>'XGHeaven',
-            'version'=>'0.1',
+            'version'=>'1.1',
             'has_adminlist'=>1,
             'type'=>1
         );
