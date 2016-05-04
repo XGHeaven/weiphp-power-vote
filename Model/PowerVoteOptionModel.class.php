@@ -10,14 +10,14 @@ use Think\Model;
 class PowerVoteOptionModel extends Model {
 	function set($vote_id, $post) {
 		$opt_data ['vote_id'] = $vote_id;
-		foreach ( $post ['name'] as $key => $opt ) {
+		foreach ( $post ['opt_name'] as $key => $opt ) {
 			if (empty ( $opt ))
 				continue;
 			
 			$opt_data ['name'] = $opt;
-			$opt_data ['image'] = $post ['image'] [$key];
-			$opt_data ['order'] = intval ( $post ['order'] [$key] );
-			$opt_data ['description'] = $post['description'][$key];
+			$opt_data ['image'] = $post ['opt_image'] [$key];
+			$opt_data ['order'] = intval ( $post ['opt_order'] [$key] );
+			$opt_data ['description'] = $post['opt_description'][$key];
 			if ($key > 0) {
 				// 更新选项
 				$optIds [] = $map ['id'] = $key;

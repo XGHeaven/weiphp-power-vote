@@ -212,164 +212,163 @@
                         </div>
                         <!--选项--->
                         <div class="form-item cf">
-                                             <label class="item-label">选项<span class="check-tips"> </span></label>
-                                             <div class="controls">
-                                             <table id="option_list" class="add_list_table" cellpadding="0" cellspacing="1">
-                                             <tr class="add_list add_list_head" <if condition="empty($option_list)">style="display:none"</if>>
-                                             <td class="pic_td">图片</td>
-                                             <td>标题</td>
-                                             <td>排序</td>
-                                             <td>操作</td>
-                                             </tr>
-                                             <volist name='option_list' id='vo'>
-                                             <tr class="add_list">
-                                             <td class="pic_td">
-                                             <div class="uploadrow" title="更改图片">
-                                             <input type="file" class="uploadImage" id="uploadImage_exist_{$vo.id}" rel="{$vo.id}">
-                                             <input type="hidden" name="image[{$vo.id}]" id="cover_id_{$vo.id}"/>
-                                             <div class="upload-img-box">
-                                             <notempty name="vo.image">
-                                             <div class="upload-pre-item"><img width="120" height="120" src="__ROOT__{$vo.image|get_cover='path'}"/></div>
-                                             </notempty>
-                                             </div>
-                                             </div>
-                                             </td>
-                                             <td>
-                                             <input type="text" value="" name="name[{$vo.id}]" class="text input-large" style="width:250px">&nbsp;
-                                             </td>
-                                             <td>
-                                             <input type="text" value="" name="order[{$vo.id}]" class="optionSort text input-large" style="width:80px">&nbsp;
-                                             </td>
-                                             <td>
-                                             <a href="javascript:;" onClick="delOpt(this)" class="fr btn btn-yellow" >删除</a>
-                                             </td>
-                                             </tr>
-                                             <tr>
-                                             <td colspan="4">
-                                             <label class="textarea">
-                                             <textarea name="description[{$vo.id}]"></textarea>
-                                             </label>
-                                             </td>
-                                             </tr>
-                                             </volist>
-                                             </table>
-                                             </div>
-                                             <p><a href="javascript:;" class="btn btn-yellow mt_10 mb_10" onClick="addOpt()" >增加选项</a></p>
-                                             <div id="top-alert" class="fixed alert alert-error" style="display: none;">
-                                             <button class="close fixed" style="margin-top: 4px;">&times;</button>
-                                             <div class="alert-content">这是内容</div>
-                                             </div>
-                                             </div>
+                            <label class="item-label">选项<span class="check-tips"> </span></label>
+                            <div class="controls">
+                                <table id="option_list" class="add_list_table" cellpadding="0" cellspacing="1">
+                                    <tr class="add_list add_list_head" <if condition="empty($option_list)">style="display:none"</if>>
+                                    <td class="pic_td">图片</td>
+                                    <td>标题</td>
+                                    <td>排序</td>
+                                    <td>操作</td>
+                                    </tr>
+                                    <volist name='option_list' id='vo'>
+                                        <tr class="add_list">
+                                            <td class="pic_td">
+                                                <div class="uploadrow" title="更改图片">
+                                                    <input type="file" class="uploadImage" id="uploadImage_exist_{$vo.id}" rel="{$vo.id}">
+                                                    <input type="hidden" name="opt_image[{$vo.id}]" id="cover_id_{$vo.id}"/>
+                                                    <div class="upload-img-box">
+                                                        <notempty name="vo.image">
+                                                            <div class="upload-pre-item"><img width="120" height="120" src="__ROOT__{$vo.image|get_cover='path'}"/></div>
+                                                        </notempty>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input type="text" value="" name="opt_name[{$vo.id}]" class="text input-large" style="width:250px">&nbsp;
+                                            </td>
+                                            <td>
+                                                <input type="text" value="" name="opt_order[{$vo.id}]" class="optionSort text input-large" style="width:80px">&nbsp;
+                                            </td>
+                                            <td>
+                                                <a href="javascript:;" onClick="delOpt(this)" class="fr btn btn-yellow" >删除</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <label class="textarea">
+                                                    <textarea name="opt_description[{$vo.id}]"></textarea>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </volist>
+                                </table>
+                            </div>
+                            <p><a href="javascript:;" class="btn btn-yellow mt_10 mb_10" onClick="addOpt()" >增加选项</a></p>
+                            <div id="top-alert" class="fixed alert alert-error" style="display: none;">
+                                <button class="close fixed" style="margin-top: 4px;">&times;</button>
+                                <div class="alert-content">这是内容</div>
+                            </div>
+                        </div>
                         <script type="text/javascript">
-                                                  //上传图片
-                                                  /* 初始化上传插件 */
-                                                  var node = '';
-                                                  function initPuls(id){
-                                                  $(".uploadImage").each(function(index, obj) {
-                                                  var id = $(obj).attr('rel');
-                                                  if(id>0)
-                                                  node = '#uploadImage_exist_'+id;
-                                                  else
-                                                  node = '#uploadImage_'+(0-id);
-                                                  $(node).uploadify({
-                                                  "height"          : 120,
-                                                  "swf"             : "__STATIC__/uploadify/uploadify.swf",
-                                                  "fileObjName"     : "download",
-                                                  "buttonText"      : "上传图片",
-                                                  "uploader"        : "{:U('home/File/uploadPicture',array('session_id'=>session_id()))}",
-                                                  "width"           : 120,
-                                                  'removeTimeout'	  : 1,
-                                                  'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
-                                                  "onUploadSuccess" : function(file, data, response) {
-                                                  uploadPictureimage(file, data, id);
-                                                  }
-                                                  });
-                                                  });
-                                                  $('textarea[name="description['+id+']"]').attr('id', 'editor_id_description_'+id);
-                                                  UE.getEditor('editor_id_description_'+id);
-                                                  }
+                            //上传图片
+                            /* 初始化上传插件 */
+                            var node = '';
+                            function initPuls(id){
+                                $(".uploadImage").each(function(index, obj) {
+                                    var id = $(obj).attr('rel');
+                                    if(id>0)
+                                        node = '#uploadImage_exist_'+id;
+                                    else
+                                        node = '#uploadImage_'+(0-id);
+                                    $(node).uploadify({
+                                        "height"          : 120,
+                                        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+                                        "fileObjName"     : "download",
+                                        "buttonText"      : "上传图片",
+                                        "uploader"        : "{:U('home/File/uploadPicture',array('session_id'=>session_id()))}",
+                                        "width"           : 120,
+                                        'removeTimeout'	  : 1,
+                                        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+                                        "onUploadSuccess" : function(file, data, response) {
+                                            uploadPictureimage(file, data, id);
+                                        }
+                                    });
+                                });
+                                $('textarea[name="opt_description['+id+']"]').attr('id', 'editor_id_description_'+id);
+                                UE.getEditor('editor_id_description_'+id);
+                            }
 
-                                                  function uploadPictureimage(file, data, id){
-                                                  var data = $.parseJSON(data);
-                                                  var src = '';
-                                                  if(data.status){
-                                                  $("#cover_id_"+id).val(data.id);
-                                                  src = data.url || '__ROOT__' + data.path;
-                                                  $("#cover_id_"+id).parent().find('.upload-img-box').html(
-                                                  '<div class="upload-pre-item"><img width="120" height="120" src="' + src + '"/></div>'
-                                                  );
-                                                  } else {
-                                                  updateAlert(data.info);
-                                                  setTimeout(function(){
-                                                  $('#top-alert').find('button').click();
-                                                  $(that).removeClass('disabled').prop('disabled',false);
-                                                  },1500);
-                                                  }
-                                                  }
+                            function uploadPictureimage(file, data, id){
+                                var data = $.parseJSON(data);
+                                var src = '';
+                                if(data.status){
+                                    $("#cover_id_"+id).val(data.id);
+                                    src = data.url || '__ROOT__' + data.path;
+                                    $("#cover_id_"+id).parent().find('.upload-img-box').html(
+                                            '<div class="upload-pre-item"><img width="120" height="120" src="' + src + '"/></div>'
+                                    );
+                                } else {
+                                    updateAlert(data.info);
+                                    setTimeout(function(){
+                                        $('#top-alert').find('button').click();
+                                        $(that).removeClass('disabled').prop('disabled',false);
+                                    },1500);
+                                }
+                            }
 
-                                                  function addOpt(){
-                                                  var i = 1;
-                                                  $('.optionSort').each(function(){i++;});
-                                                  var id = 0-i;
+                            function addOpt(){
+                                var i = 1;
+                                $('.optionSort').each(function(){i++;});
+                                var id = 0-i;
 
-                                                  var html = '<tr class="add_list"><td class="pic_td"><div class="uploadrow" title="更改图片">'
-                                                  +'<input type="file" class="uploadImage" id="uploadImage_'+i+'" rel="'+id+'"/>'
-                                                  +'<input type="hidden" name="image['+id+']" id="cover_id_'+id+'"/>'
-                                                  +'<div class="upload-img-box"></div>'
-                                                  +'</div></td><td>'
-                                                  +'<input type="text" value="" name="name['+id+']" class="text input-large" style="width:250px">'
-                                                  +'</td><td>'
-                                                  +'<input type="text" value="'+i+'" name="order['+id+']" class="optionSort text input-large" style="width:80px">&nbsp;'
-                                                  +'</td><td>'
-                                                  +'<a href="###" onClick="delOpt(this)" class="fr btn btn-yellow" >删除</a></td></tr>'
-                                                  +'<tr>'
-                                                  +'<td colspan="3">'
-                                                  +'<label class="textarea">'
-                                                  +'<textarea name="description['+id+']"></textarea>'
-                                                  //        +'{#hook('adminArticleEdit', array('name'=>$field['name'],'value'=>$field['value']))} </label>'
-                                                  +'</td>'
-                                                  +'</tr>';
-                                                  $('#option_list').append(html);
+                                var html = '<tr class="add_list"><td class="pic_td"><div class="uploadrow" title="更改图片">'
+                                        +'<input type="file" class="uploadImage" id="uploadImage_'+i+'" rel="'+id+'"/>'
+                                        +'<input type="hidden" name="opt_image['+id+']" id="cover_id_'+id+'"/>'
+                                        +'<div class="upload-img-box"></div>'
+                                        +'</div></td><td>'
+                                        +'<input type="text" value="" name="opt_name['+id+']" class="text input-large" style="width:250px">'
+                                        +'</td><td>'
+                                        +'<input type="text" value="'+i+'" name="opt_order['+id+']" class="optionSort text input-large" style="width:80px">&nbsp;'
+                                        +'</td><td>'
+                                        +'<a href="###" onClick="delOpt(this)" class="fr btn btn-yellow" >删除</a></td></tr>'
+                                        +'<tr>'
+                                        +'<td colspan="3">'
+                                        +'<label class="textarea">'
+                                        +'<textarea name="opt_description['+id+']"></textarea>'
+                                        +'</td>'
+                                        +'</tr>';
+                                $('#option_list').append(html);
 
-                                                  initPuls(id);
-                                                  changeOption();
-                                                  $('.add_list_head').show();
-                                                  }
-                                                  function delOpt(obj){
-                                                  var self = $(obj).parents('tr');
-                                                  var editor = self.next().remove();
-                                                  UE.getEditor( editor.find('textarea').attr('id') ).destroy();
-                                                  editor.remove();
-                                                  self.remove();
-                                                  }
-                                                  function changeOption(){
-                                                  var val = $('input[name="is_img"]:checked').val();
-                                                  if(val!=1){
-                                                  /*
-                                                  $('.uploadify').each(function() {
-                                                  if($(this).attr('id')!='upload_picture_picurl') $(this).hide();
-                                                  });
-                                                  */
-                                                  $('.upload-img-box').each(function() {
-                                                  if($(this).attr('rel')!='img') $(this).hide();
-                                                  });
-                                                  $('.pic_td').hide();
-                                                  }else{
-                                                  $('.uploadify').each(function() {
-                                                  $(this).show();
-                                                  });
-                                                  $('.upload-img-box').each(function() {
-                                                  $(this).show();
-                                                  });
-                                                  $('.pic_td').show();
-                                                  }
-                                                  }
-                                                  $(function(){
-                                                  initPuls();
-                                                  changeOption();
-                                                  window.UEDITOR_CONFIG.initialFrameHeight = '300px';
-                                                  });
-                                                  </script>
+                                initPuls(id);
+                                changeOption();
+                                $('.add_list_head').show();
+                            }
+                            function delOpt(obj){
+                                var self = $(obj).parents('tr');
+                                var editor = self.next().remove();
+                                UE.getEditor( editor.find('textarea').attr('id') ).destroy();
+                                editor.remove();
+                                self.remove();
+                            }
+                            function changeOption(){
+                                var val = $('input[name="is_img"]:checked').val();
+                                if(val!=1){
+                                    /*
+                                     $('.uploadify').each(function() {
+                                     if($(this).attr('id')!='upload_picture_picurl') $(this).hide();
+                                     });
+                                     */
+                                    $('.upload-img-box').each(function() {
+                                        if($(this).attr('rel')!='img') $(this).hide();
+                                    });
+                                    $('.pic_td').hide();
+                                }else{
+                                    $('.uploadify').each(function() {
+                                        $(this).show();
+                                    });
+                                    $('.upload-img-box').each(function() {
+                                        $(this).show();
+                                    });
+                                    $('.pic_td').show();
+                                }
+                            }
+                            $(function(){
+                                initPuls();
+                                changeOption();
+                                window.UEDITOR_CONFIG.initialFrameHeight = '300px';
+                            });
+                        </script>
                         <div class="form-item cf">
                             <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
                         </div>
