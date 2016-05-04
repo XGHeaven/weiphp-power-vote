@@ -97,6 +97,9 @@ article .info {
 .vote-container .remark {
   color: #808080;
 }
+.vote-container .detail-name {
+  margin-top: 0;
+}
 .vote-container .detail {
   word-break: break-all;
 }
@@ -178,6 +181,10 @@ ul.vote-list.image li.item .item-wrapper .select.selected .glyphicon {
 }
 .option-wrapper {
   padding: 10px 0;
+}
+.option-wrapper .img-wrapper {
+  padding-right: 10px;
+  width: 40%;
 }
 .option-wrapper img {
   width: 100%;

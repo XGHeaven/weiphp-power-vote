@@ -14,6 +14,31 @@
 </head>
 <body>
 <include file="Addons://PowerVote@Partial/vote_common"/>
+<php>$is_img = $info['is_img'] == 1;</php>
+<div class="vote-container">
+    <div class="header"> 候选介绍 </div>
+    <foreach name="opts" item="opt">
+        <div class="option-wrapper clearfix">
+            <if condition="$is_img">
+                <!--<div class="row">-->
+                    <!--<div class="col-xs-6 pull-left">-->
+                        <!--<img src="{$opt.image|get_cover_url}" class="img-circle img-responsive">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="pull-left img-wrapper">
+                    <img src="{$opt.image|get_cover_url}" class="img-circle img-responsive">
+                </div>
+            </if>
+            <div>
+                <h3 class="text-center detail-name">{$opt.name}</h3>
+                <div class="detail">{$opt.description}</div>
+            </div>
+            <!--<h4 class="text-center">{$opt.name}</h4>-->
+            <!--<div class="detail">{$opt.description}</div>-->
+        </div>
+        <hr>
+    </foreach>
+</div>
 <div class="vote-container">
     <div class="header">
         投票列表(点击查看介绍)
@@ -21,7 +46,6 @@
             <a href="{:U('result', Array('id' => $vote_id))}">投票结果 &gt;</a>
         </div>
     </div>
-    <php>$is_img = $info['is_img'] == 1;</php>
     <form action="{:U( 'join' )}" onsubmit="return checkForm();" method="post" id="vote_form">
         <ul class="vote-list clearfix {$is_img?'image':'text'}">
             <foreach name="opts" item="opt" key="k">
