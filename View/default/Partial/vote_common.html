@@ -16,15 +16,15 @@
         投票规则
     </div>
     <div class="content">
-        <ol>
+        <ul class="vote-rule">
             <if condition="($info.start_date eq 0) and ($info.end_date eq 0)">
-                <li> 时间限制: 无时间限制 </li>
+                <li>时间限制: 无时间限制</li>
             </if>
             <if condition="($info.start_date neq 0) and ($info.end_date eq 0)">
-                <li> 时间限制: {$info.start_date|time_format} 开始, 无结束时间限制 </li>
+                <li>时间限制: {$info.start_date|time_format} 开始, 无结束时间限制</li>
             </if>
             <if condition="($info.start_date eq 0) and ($info.end_date neq 0)">
-                <li> 时间限制: {$info.end_date|time_format} 结束 </li>
+                <li>时间限制: {$info.end_date|time_format} 结束</li>
             </if>
             <if condition="($info.start_date neq 0) and ($info.end_date neq 0)">
                 <li> 时间限制: {$info.start_date|time_format} 至 {$info.end_date|time_format} </li>
@@ -39,7 +39,7 @@
                 </if>
             </if>
             <li>请您在喜欢的选项下面点击“为他投票”进行选择,最后统一点击提交生效此次投票</li>
-        </ol>
+        </ul>
     </div>
     <div class="remark">
         <switch name="overtime">
