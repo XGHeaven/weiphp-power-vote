@@ -20,8 +20,11 @@
         </div>
     </foreach>
     <script>
-        var srcList = [
+        var imageIDList = [
                 <foreach name="opts" item="opt">{$opt.image},</foreach>
-        ]
+        ];
+        var srcList = [
+                <foreach name="opts" item="opt">'{$opt.image|get_cover_url}',</foreach>
+        ];
     </script>
 </div>
