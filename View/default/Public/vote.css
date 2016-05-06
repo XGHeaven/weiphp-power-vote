@@ -12,6 +12,14 @@
 .btn {
   border: none;
 }
+.label {
+  border-radius: 10px;
+  padding: 0px 10px;
+  font-size: 1em;
+}
+.label.label-prompt {
+  background: #f39;
+}
 /* CSS Document */
 /*微信投票*/
 .vote_wrap {
@@ -85,6 +93,9 @@ article .info {
 .vote-container {
   padding: 20px 10px;
   box-shadow: 0 2px 10px -2px #ccc;
+}
+.vote-container.vote-candidate {
+  padding-right: 0;
 }
 .vote-container .header {
   text-align: center;
@@ -182,12 +193,33 @@ ul.vote-list.image li.item .item-wrapper .select.selected .glyphicon {
   list-style: none;
 }
 .option-wrapper {
-  padding: 10px 0;
+  padding: 10px 0 10px 30px;
+  position: relative;
 }
-.option-wrapper .img-wrapper {
-  padding-right: 10px;
-  width: 40%;
+.option-wrapper .option-avatar {
+  position: absolute;
+  top: 25px;
+  left: 0;
+  width: 60px;
 }
-.option-wrapper img {
+.option-wrapper .option-avatar img {
   width: 100%;
+  box-shadow: 0 0 10px 1px #ccc;
+}
+.option-wrapper .option-content {
+  box-shadow: 0 0 10px 1px #ccc;
+  padding: 10px;
+  padding-left: 40px;
+}
+.option-wrapper .option-content .name {
+  font-size: 22px;
+}
+.option-wrapper .option-content .detail {
+  font-size: 16px;
+}
+.quote:before {
+  content: "“";
+  font-size: 25px;
+  margin: 15px 0;
+  color: #eee;
 }
