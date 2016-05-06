@@ -3,6 +3,23 @@
         <img width="100%" src="{$info.picurl|get_cover_url}">
     </div>
 </notempty>
+<if condition="$joinError eq 1 or $canJoin eq 0">
+    <div class="vote-container">
+        <div class="header">
+            <switch name="overtime">
+                <case value="1">活动暂未开始,请等待</case>
+                <case value="-1">活动已经结束,感谢参与</case>
+                <case value="0">
+                    <if condition="$canJoin">
+                        请您关注 {$app.public_name} 微信号
+                    <else/>
+                        您已经投过票了
+                    </if>
+                </case>
+            </switch>
+        </div>
+    </div>
+</if>
 <div class="vote-container">
     <div class="header">
         <img src="{:ADDON_PUBLIC_PATH}/image/description.png">
@@ -42,20 +59,5 @@
         </ul>
     </div>
     <div class="remark">
-        <switch name="overtime">
-            <case value="1">活动暂未开始,请等待</case>
-            <case value="-1">活动已经结束,感谢参与</case>
-            <case value="0">
-                <if condition="$canJoin">
-                    已经有{$info.vote_count|intval}人投票，赶紧投下你宝贵的一票吧 :)
-                <else/>
-                    <if condition="$joinError">
-                        请您关注 {$app.public_name} 微信号
-                    <else/>
-                        您已经投过票了,感谢您的参与
-                    </if>
-                </if>
-            </case>
-        </switch>
     </div>
 </div>

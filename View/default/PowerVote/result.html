@@ -23,6 +23,7 @@
         <foreach name="opts" item="opt" key="k">
             <li>
                 <div class="title clearfix">
+                    <span class="label label-prompt label-inline">{$k+1}</span>
                     {$opt.name}
                     <div class="pull-right">
                         {$opt.opt_count}
@@ -37,8 +38,8 @@
             </li>
         </foreach>
     </ul>
-    <a href="{:U('show', Array('id' => $vote_id))}" class="btn btn-primary form-control">返回</a>
 </div>
+<include file="Addons://PowerVote@Partial/candidates"/>
 <script src="{:ADDON_PUBLIC_PATH}/vote.js?v={:SITE_VERSION}"></script>
 </body>
 </html>

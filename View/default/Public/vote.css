@@ -35,6 +35,9 @@
 .label.label-prompt {
   background: #f39;
 }
+.label.label-prompt.label-inline {
+  padding: 0 5px;
+}
 /* CSS Document */
 /*微信投票*/
 .vote_wrap {
@@ -237,11 +240,11 @@ ul.vote-list.image li.item .item-wrapper .btn-select.selected:after {
   font-size: 22px;
 }
 .option-wrapper .option-content .detail {
-  font-size: 16px;
+  font-size: 14px;
 }
 .quote:before {
   content: "“";
   font-size: 25px;
   margin: 15px 0;
-  color: #eee;
+  color: #ccc;
 }
