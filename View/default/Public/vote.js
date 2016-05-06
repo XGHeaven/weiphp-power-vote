@@ -7,9 +7,10 @@
       wx = WeixinJSBridge;
       wx.call('hideOptionMenu');
       return $('img').click(e(function() {
-        var $this, src;
-        $this = $(this);
-        src = $this.attr('src');
+        var src;
+        src = this.src;
+        alert(JSON.stringify(srcList));
+        alert(src);
         if (~srcList.indexof(src)) {
           return wx.invoke('imagePreview', {
             current: src,

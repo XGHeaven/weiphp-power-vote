@@ -3,8 +3,9 @@ do ($) ->
         wx = WeixinJSBridge
         wx.call 'hideOptionMenu'
         $('img').click e ->
-            $this = $(this)
-            src = $this.attr 'src'
+            src = @src
+            alert JSON.stringify srcList
+            alert src
             if ~srcList.indexof src
                 wx.invoke('imagePreview', {
                     current: src,
