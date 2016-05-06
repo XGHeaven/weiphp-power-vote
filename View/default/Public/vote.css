@@ -11,6 +11,21 @@
 }
 .btn {
   border: none;
+  border-radius: 1000px;
+}
+.btn:active {
+  box-shadow: none;
+}
+.btn.btn-select {
+  background: #fff;
+  color: #777;
+}
+.btn.btn-select.selected {
+  background: #f39;
+  color: #fff;
+}
+.img-circle {
+  border-radius: 1000px;
 }
 .label {
   border-radius: 10px;
@@ -149,44 +164,46 @@ ul.vote-list.image li.item a:active {
 }
 ul.vote-list.text li.item .item-wrapper,
 ul.vote-list.image li.item .item-wrapper {
-  padding: 5px;
+  padding: 15px;
   display: inline-block;
-  box-shadow: 0 0 2px #999;
   width: 100%;
+  background: #eee;
 }
 ul.vote-list.text li.item .item-wrapper .img-wrapper,
 ul.vote-list.image li.item .item-wrapper .img-wrapper {
-  min-height: 100px;
+  width: 100%;
+  padding: 10px;
 }
 ul.vote-list.text li.item .item-wrapper .img-wrapper img,
 ul.vote-list.image li.item .item-wrapper .img-wrapper img {
   width: 100%;
   margin: auto;
 }
-ul.vote-list.text li.item .item-wrapper .title,
-ul.vote-list.image li.item .item-wrapper .title {
+ul.vote-list.text li.item .item-wrapper .name,
+ul.vote-list.image li.item .item-wrapper .name {
   line-height: 2;
   text-overflow: ellipsis;
   overflow: hidden;
   font-weight: bold;
   text-align: center;
+  font-size: 22px;
 }
 ul.vote-list.text li.item .item-wrapper .status,
 ul.vote-list.image li.item .item-wrapper .status {
   margin-bottom: 5px;
   font-size: 0.8em;
 }
-ul.vote-list.text li.item .item-wrapper .select,
-ul.vote-list.image li.item .item-wrapper .select {
+ul.vote-list.text li.item .item-wrapper .btn-select,
+ul.vote-list.image li.item .item-wrapper .btn-select {
   display: block;
 }
-ul.vote-list.text li.item .item-wrapper .select.selected,
-ul.vote-list.image li.item .item-wrapper .select.selected {
-  background: #175d92;
+ul.vote-list.text li.item .item-wrapper .btn-select:after,
+ul.vote-list.image li.item .item-wrapper .btn-select:after {
+  content: '为他投票';
 }
-ul.vote-list.text li.item .item-wrapper .select.selected .glyphicon,
-ul.vote-list.image li.item .item-wrapper .select.selected .glyphicon {
-  display: inline !important;
+ul.vote-list.text li.item .item-wrapper .btn-select.selected:after,
+ul.vote-list.image li.item .item-wrapper .btn-select.selected:after {
+  content: '已选中';
 }
 .vote-result {
   padding: 0;

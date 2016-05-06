@@ -22,6 +22,18 @@ body {
     background darken(#2185d0,10%)
 .btn
   border none
+  border-radius 1000px
+  &:active
+    box-shadow none
+
+  &.btn-select
+    background white
+    color #777
+    &.selected
+      background COLOR_LABEL_PROMPT
+      color white
+.img-circle
+  border-radius 1000px
 
 .label
   border-radius 10px
@@ -108,30 +120,35 @@ ul.vote-list
           color black
       padding 10px
       .item-wrapper
-        padding 5px
+        padding 15px
         display inline-block
-        box-shadow 0 0 2px #999
         width 100%
+        background #eee
         .img-wrapper
-          min-height 100px
+          width 100%
+          padding 10px
           img
             width 100%
             margin auto
-        .title
+        .name
           line-height 2
           text-overflow ellipsis
           overflow hidden
           font-weight bold
           text-align center
+          font-size 22px
         .status
           margin-bottom 5px
           font-size 0.8em
-        .select
+        .btn-select
           display block
+          &:after
+            content '为他投票'
           &.selected
-            background COLOR_SELECT
-            .glyphicon
-              display inline!important
+            //.glyphicon
+            //  display inline!important
+            &:after
+              content '已选中'
 
 .vote-result
   padding 0
