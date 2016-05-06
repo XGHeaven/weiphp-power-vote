@@ -11,9 +11,8 @@
       return $('img').click(function(e) {
         var src;
         src = this.src;
-        alert(JSON.stringify(srcList));
-        alert(src);
-        if (~srcList.indexof(src)) {
+        if (~srcList.indexOf(src)) {
+          alert(1);
           return WeixinJSBridge.invoke('imagePreview', {
             current: src,
             urls: srcList

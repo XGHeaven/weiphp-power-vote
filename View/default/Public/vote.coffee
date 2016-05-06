@@ -6,9 +6,8 @@ do ($) ->
     $ ->
         $('img').click (e) ->
             src = @src
-            alert JSON.stringify srcList
-            alert src
-            if ~srcList.indexof src
+            if ~srcList.indexOf src
+                alert 1
                 WeixinJSBridge.invoke('imagePreview', {
                     current: src,
                     urls: srcList
