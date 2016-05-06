@@ -220,15 +220,16 @@ class PowerVoteController extends AddonsController {
 		$openid = get_openid ();
 		$token = get_token ();
 
-		if ($this -> _is_join($vote_id, $openid, $token)) {
+		$this -> inject_can_join($vote_id);
+
+		if ($this -> beforeJoined) {
 			redirect(U('result', Array('id' => $vote_id)));
 		}
 
 		$this -> assign('app', get_token_appinfo($token));
 		
 		$info = $this->_getVoteInfo ( $vote_id );
-		$this -> inject_can_join($vote_id);
-		
+
 //		$canJoin = ! empty ( $openid ) && ! empty ( $token ) && ! ($this->_is_overtime ( $vote_id )) && ! ($this->_is_join ( $vote_id, $this->mid, $token ));
 //		$this->assign ( 'canJoin', $canJoin );
 		// dump ( $canJoin );
@@ -386,9 +387,9 @@ class PowerVoteController extends AddonsController {
 	private function inject_can_join($vote_id) {
 		$open_id = get_openid();
 		$token = get_token();
-		$overtime = $this -> _is_overtime($vote_id);
-		$this -> assign('overtime', $overtime);
-		$this -> assign('canJoin', !$this->_is_join ( $vote_id, $this->mid, $token ));
-		$this -> assign('joinError', $open_id==-1 || $token==-1);
+		$this -> overtime = $this -> _is_overtime($vote_id);
+		$this -> beforeJoined = !!$this -> _is_join($vote_id, $this -> mid, $token);
+		$this -> joinAccess = $open_id==-1 || $token==-1;
+		$this -> canJoin = !$this -> beforeJoined && $this -> joinAccess && $this -> overtime == 0;
 	}
 }
