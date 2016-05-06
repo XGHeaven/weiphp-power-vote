@@ -12,6 +12,7 @@
                 <case value="0">
                     <if condition="$canJoin">
                         请您关注 {$app.public_name} 微信号
+                        <img src="{$info.qrcode|get_cover_url}" style="width:100%">
                     <else/>
                         您已经投过票了
                     </if>
