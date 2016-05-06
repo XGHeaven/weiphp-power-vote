@@ -1,7 +1,4 @@
 @charset "utf-8";
-body {
-  background: #eee;
-}
 .text-primary {
   color: #2185d0;
 }
@@ -86,10 +83,8 @@ article .info {
   -webkit-box-flex: 1;
 }
 .vote-container {
-  padding: 10px;
-  background: #fff;
-  margin-bottom: 10px;
-  box-shadow: 0 2px 5px -2px #999;
+  padding: 20px 10px;
+  box-shadow: 0 2px 10px -2px #ccc;
 }
 .vote-container .header {
   text-align: center;
