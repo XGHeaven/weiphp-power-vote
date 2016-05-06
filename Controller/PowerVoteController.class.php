@@ -220,6 +220,10 @@ class PowerVoteController extends AddonsController {
 		$openid = get_openid ();
 		$token = get_token ();
 
+		if ($this -> _is_join($vote_id, $openid, $token)) {
+			redirect(U('result', Array('id' => $vote_id)));
+		}
+
 		$this -> assign('app', get_token_appinfo($token));
 		
 		$info = $this->_getVoteInfo ( $vote_id );
@@ -346,7 +350,7 @@ class PowerVoteController extends AddonsController {
 		// 增加积分
 		add_credit('power_vote');
 
-		redirect(U('show', 'id=' . $vote_id));
+		redirect(U('result', 'id=' . $vote_id));
 	}
 
 	/**
