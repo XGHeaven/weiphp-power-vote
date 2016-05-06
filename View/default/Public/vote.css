@@ -92,7 +92,14 @@ article .info {
   box-shadow: 0 2px 5px -2px #999;
 }
 .vote-container .header {
-  color: #053284;
+  text-align: center;
+  font-size: 1.4em;
+  margin-bottom: 20px;
+}
+.vote-container .header img {
+  display: block;
+  margin: 10px auto 15px;
+  width: 7%;
 }
 .vote-container .remark {
   color: #808080;

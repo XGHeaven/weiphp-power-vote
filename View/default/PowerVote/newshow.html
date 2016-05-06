@@ -16,7 +16,10 @@
 <include file="Addons://PowerVote@Partial/vote_common"/>
 <php>$is_img = $info['is_img'] == 1;</php>
 <div class="vote-container">
-    <div class="header"> 候选介绍 </div>
+    <div class="header">
+        <img src="{:ADDON_PUBLIC_PATH}/image/people.png">
+        候选介绍
+    </div>
     <foreach name="opts" item="opt">
         <div class="option-wrapper clearfix">
             <if condition="$is_img">
@@ -41,10 +44,8 @@
 </div>
 <div class="vote-container">
     <div class="header">
-        投票列表(点击查看介绍)
-        <div class="addon pull-right">
-            <a href="{:U('result', Array('id' => $vote_id))}">投票结果 &gt;</a>
-        </div>
+        <img src="{:ADDON_PUBLIC_PATH}/image/item.png" style="width: 10%">
+        投票列表
     </div>
     <form action="{:U( 'join' )}" onsubmit="return checkForm();" method="post" id="vote_form">
         <ul class="vote-list clearfix {$is_img?'image':'text'}">
