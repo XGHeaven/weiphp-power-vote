@@ -5,20 +5,22 @@
     onWeixinBridge = function() {
       var wx;
       wx = WeixinJSBridge;
-      wx.call('hideOptionMenu');
-      return $('img').click(e(function() {
+      return wx.call('hideOptionMenu');
+    };
+    $(function() {
+      return $('img').click(function(e) {
         var src;
         src = this.src;
         alert(JSON.stringify(srcList));
         alert(src);
         if (~srcList.indexof(src)) {
-          return wx.invoke('imagePreview', {
+          return WeixinJSBridge.invoke('imagePreview', {
             current: src,
             urls: srcList
           });
         }
-      }));
-    };
+      });
+    });
     if (typeof WeixinJSBridge === "undefined") {
       if (document.addEventListener) {
         return document.addEventListener('WeixinJSBridgeReady', onWeixinBridge, false);
