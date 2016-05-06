@@ -5,11 +5,8 @@ do ($) ->
 
     $ ->
         $('img').click (e) ->
-            src = @src
-            alert srcList.indexOf src
-            alert ~srcList.indexOf src
+            src = $(this). data 'id'
             if ~srcList.indexOf src
-                alert 1
                 WeixinJSBridge.invoke('imagePreview', {
                     current: src,
                     urls: srcList

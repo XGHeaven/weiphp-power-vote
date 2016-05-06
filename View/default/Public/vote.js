@@ -10,11 +10,8 @@
     $(function() {
       return $('img').click(function(e) {
         var src;
-        src = this.src;
-        alert(srcList.indexOf(src));
-        alert(~srcList.indexOf(src));
+        src = $(this).data('id');
         if (~srcList.indexOf(src)) {
-          alert(1);
           return WeixinJSBridge.invoke('imagePreview', {
             current: src,
             urls: srcList

@@ -8,7 +8,7 @@
         <div class="option-wrapper clearfix">
             <if condition="$is_img">
                 <div class="option-avatar">
-                    <img src="{$opt.image|get_cover_url}" class="img-circle img-responsive">
+                    <img src="{$opt.image|get_cover_url}" class="img-circle img-responsive" data-id="{$opt.image}">
                 </div>
             </if>
             <div class="option-content">
@@ -21,7 +21,7 @@
     </foreach>
     <script>
         var srcList = [
-                <foreach name="opts" item="opt">'{$opt.image|get_cover_url}',</foreach>
+                <foreach name="opts" item="opt">{$opt.image},</foreach>
         ]
     </script>
 </div>
