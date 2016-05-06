@@ -2,7 +2,22 @@
 (function() {
   (function($) {
     var onWeixinBridge;
-    onWeixinBridge = function() {};
+    onWeixinBridge = function() {
+      var wx;
+      wx = WeixinJSBridge;
+      wx.call('hideOptionMenu');
+      return $('img').click(e(function() {
+        var $this, src;
+        $this = $(this);
+        src = $this.attr('src');
+        if (~srcList.indexof(src)) {
+          return wx.invoke('imagePreview', {
+            current: src,
+            urls: srcList
+          });
+        }
+      }));
+    };
     if (typeof WeixinJSBridge === "undefined") {
       if (document.addEventListener) {
         return document.addEventListener('WeixinJSBridgeReady', onWeixinBridge, false);

@@ -19,4 +19,9 @@
             </div>
         </div>
     </foreach>
+    <script>
+        var srcList = [
+                <foreach name="opts" item="opt">'{$opt.image|get_cover_url}',</foreach>
+        ]
+    </script>
 </div>
