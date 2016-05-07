@@ -43,6 +43,7 @@
               <volist name="list_data" id="data">
                 <tr>
                   <td><input class="ids" type="checkbox" value="{$data['id']}" name="ids[]"></td>
+                    <php>$data['token'] = $app['token']</php>
                   <volist name="list_grids" id="grid">
                     <td>{:get_list_field($data,$grid,$model)}</td>
                   </volist>
@@ -56,9 +57,29 @@
     </section>
   </div>
 </block>
-<block name="script"> 
+<block name="script">
+  <script src="__STATIC__/zeroclipboard/ZeroClipboard.min.js"></script>
   <script type="text/javascript">
 $(function(){
+    var client = new ZeroClipboard($('td > a:last-child').click(function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }).each(function() {
+        var self = $(this);
+        self.attr('data-clipboard-text', self.attr('href'));
+    }));
+
+    client.on('copy', function(e) {
+        console.log(e);
+    });
+    client.on('aftercopy', function(e) {
+        if (e.success['text/plain']) {
+            updateAlert('复制成功', 'alert-success');
+        } else {
+            updateAlert('复制失败');
+        }
+        setTimeout('window.updateAlert()', 3000);
+    });
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');
@@ -79,6 +100,8 @@ $(function(){
             $("#search").click();
         }
     });
+
+
 
 })
 </script> 

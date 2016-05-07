@@ -28,6 +28,7 @@ class PowerVoteController extends AddonsController {
 		$list_data = $this->_list_grid ( $this->model );
 		$grids = $list_data ['list_grids'];
 		$fields = $list_data ['fields'];
+		$app = get_token_appinfo();
 		
 		// 关键字搜索
 		$map ['token'] = get_token ();
@@ -66,6 +67,7 @@ class PowerVoteController extends AddonsController {
 		$this->assign ( 'list_grids', $grids );
 		$this->assign ( 'list_data', $data );
 		$this->meta_title = $this->model ['title'] . '列表';
+		$this -> assign('app', $app);
 		$this->display ( T ( 'Addons://PowerVote@PowerVote/lists' ) );
 	}
 	public function del() {
