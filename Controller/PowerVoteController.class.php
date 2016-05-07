@@ -110,7 +110,7 @@ class PowerVoteController extends AddonsController {
 				// 保存关键词
 				D ( 'Common/Keyword' )->set ( I ( 'post.keyword' ), 'PowerVote', I ( 'post.id' ) );
 				
-				$this->success ( '保存' . $this->model ['title'] . '成功！', U ( 'lists?model=' . $this->model ['name'] ) );
+				$this->success ( '保存' . $this->model ['title'] . '成功！', U ( 'lists' ) );
 			} else {
 				$this->error ( $Model->getError () );
 			}
@@ -149,7 +149,7 @@ class PowerVoteController extends AddonsController {
 				// 保存关键词
 				D ( 'Common/Keyword' )->set ( I ( 'keyword' ), 'PowerVote', $vote_id );
 				
-				$this->success ( '添加' . $this->model ['title'] . '成功！', U ( 'lists?model=' . $this->model ['name'] ) );
+				$this->success ( '添加' . $this->model ['title'] . '成功！', U ( 'lists' ) );
 			} else {
 				$this->error ( $Model->getError () );
 			}
