@@ -6,18 +6,16 @@
 <if condition="$canJoin eq 0">
     <div class="vote-container">
         <div class="header">
-            <switch name="overtime">
-                <case value="0">
-                    <if condition="$joinAccess eq 0">
-                        请您关注 {$app.public_name} 微信号
-                        <img src="{$info.qrcode|get_cover_url}" style="width:100%">
-                    <else/>
-                        您已经投过票了
-                    </if>
-                </case>
-                <case value="1">活动暂未开始,请等待</case>
-                <case value="-1">活动已经结束,感谢参与</case>
-            </switch>
+            <if condition="$joinAccess eq 0">
+                请您关注 {$app.public_name} 微信号
+                <img src="{$info.qrcode|get_cover_url}" style="width:100%">
+            <else/>
+                <switch name="overtime">
+                    <case value="0">您已经投过票了</case>
+                    <case value="1">活动暂未开始,请等待</case>
+                    <case value="-1">活动已经结束,感谢参与</case>
+                </switch>
+            </if>
         </div>
     </div>
 </if>
