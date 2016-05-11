@@ -222,6 +222,10 @@ class PowerVoteController extends AddonsController {
 		$openid = get_openid ();
 		$token = get_token ();
 
+		if (!empty(openid) && !empty(I('openid'))) {
+			redirect(U('show', Array('id' => $vote_id, 'token' => $token)));
+		}
+
 		$this -> inject_can_join($vote_id);
 
 		if ($this -> beforeJoined) {
